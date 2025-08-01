@@ -1,16 +1,15 @@
-import Image from "next/image";
+"use client";
+
+import { Canvas } from "@react-three/fiber";
+import Experience from "./components/experience";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <div>
-          <h1>Saurav Lal Karn</h1>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        @copyright 2025 Saurav Lal Karn
-      </footer>
-    </div>
+    <main className="h-screen w-screen">
+      <Canvas shadows camera={{ position: [0, 2, 5], fov: 30 }}>
+        <color attach="background" args={["#ececec"]} />
+        <Experience />
+      </Canvas>
+    </main>
   );
 }

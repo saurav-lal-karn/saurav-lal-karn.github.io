@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Saurav Lal Karn | Senior Software Engineer",
+  title: "Saurav Lal Karn | Computer Engineer",
   description: "Saurav Lal Karn's Portfolio",
 };
 
