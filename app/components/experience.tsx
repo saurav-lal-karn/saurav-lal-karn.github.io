@@ -1,25 +1,18 @@
-import { Environment, OrbitControls, Sky } from "@react-three/drei";
+"use client";
+
+import { Environment, Sky } from "@react-three/drei";
 import { Avatar } from "./avatar";
-import { useControls } from "leva";
 import { Workspace } from "./Workspace";
 
 const Experience = () => {
-  const { animation } = useControls({
-    animation: {
-      value: "Standing",
-      options: ["Typing", "Falling", "Standing", "Waving"],
-    },
-  });
-
   return (
     <>
-      <OrbitControls />
-      <Sky />
+      {/* <Sky />
       <Environment preset="sunset" />
       <group position={[0, -1, 0]}>
         <Avatar />
         <Workspace />
-      </group>
+      </group> */}
       {/* <mesh
         position={[0, 0, 0]}
         receiveShadow
@@ -29,6 +22,11 @@ const Experience = () => {
         <planeGeometry args={[1, 1]} />
         <meshStandardMaterial color="white" />
       </mesh> */}
+      <ambientLight intensity={2} />
+      <group position={[1.5, -1, -1]}>
+        <Workspace />
+        <Avatar />
+      </group>
     </>
   );
 };
