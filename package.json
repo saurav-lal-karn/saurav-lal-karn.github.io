@@ -11,10 +11,11 @@
     "deploy": "npm run build && touch out/.nojekyll"
   },
   "dependencies": {
+    "@react-spring/three": "^10.0.1",
     "@react-three/drei": "^10.6.1",
     "@react-three/fiber": "^9.0.0-alpha.8",
-    "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",
+    "motion": "^12.23.12",
     "next": "15.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
