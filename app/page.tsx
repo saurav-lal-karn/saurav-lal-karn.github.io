@@ -9,39 +9,40 @@ import * as THREE from "three";
 import ScrollManager from "./components/ScrollManager";
 import Menu from "./components/Menu";
 
-function Content() {
-  const scroll = useScroll();
-  const meshRef = useRef<THREE.Group>(null);
-  useEffect(() => {
-    const updatePosition = () => {
-      if (meshRef.current) {
-        meshRef.current.position.y = -scroll.offset * 5;
-      }
-    };
+// function Content(props: { section: number }) {
+//   const { section } = props;
+//   const scroll = useScroll();
+//   const meshRef = useRef<THREE.Group>(null);
+//   useEffect(() => {
+//     const updatePosition = () => {
+//       if (meshRef.current) {
+//         meshRef.current.position.y = -scroll.offset * 5;
+//       }
+//     };
 
-    updatePosition();
+//     updatePosition();
 
-    // Use requestAnimationFrame for smooth updates
-    let animationId: number;
-    const animate = () => {
-      updatePosition();
-      animationId = requestAnimationFrame(animate);
-    };
-    animate();
+//     // Use requestAnimationFrame for smooth updates
+//     let animationId: number;
+//     const animate = () => {
+//       updatePosition();
+//       animationId = requestAnimationFrame(animate);
+//     };
+//     animate();
 
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, [scroll.offset]);
+//     return () => {
+//       if (animationId) {
+//         cancelAnimationFrame(animationId);
+//       }
+//     };
+//   }, [scroll.offset]);
 
-  return (
-    <group ref={meshRef}>
-      <Experience />
-    </group>
-  );
-}
+//   return (
+//     <group ref={meshRef}>
+//       <Experience section={section} />
+//     </group>
+//   );
+// }
 
 export default function Home() {
   const [section, setSection] = useState(0);
@@ -56,7 +57,9 @@ export default function Home() {
           {/* <Scroll>
             <Content />
           </Scroll> */}
-          <Experience />
+          <Scroll>
+            <Experience section={section} />
+          </Scroll>
           <Scroll html>
             <Interface />
           </Scroll>
