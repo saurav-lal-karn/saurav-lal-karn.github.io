@@ -41,29 +41,29 @@ export function Avatar(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGraph(clone) as unknown as GLTFResult;
 
   // Animations here
-  const { animations: TypingAnimation } = useFBX("/animations/Typing.fbx");
-  const { animations: FallingAnimation } = useFBX(
-    "/animations/Falling_Idle.fbx"
-  );
-  const { animations: StandingAnimation } = useFBX(
-    "/animations/Standing_Idle.fbx"
-  );
-  const { animations: WavingAnimation } = useFBX("/animations/Waving.fbx");
+  // const { animations: TypingAnimation } = useFBX("/animations/Typing.fbx");
+  // const { animations: FallingAnimation } = useFBX(
+  //   "/animations/Falling_Idle.fbx"
+  // );
+  // const { animations: StandingAnimation } = useFBX(
+  //   "/animations/Standing_Idle.fbx"
+  // );
+  // const { animations: WavingAnimation } = useFBX("/animations/Waving.fbx");
 
-  TypingAnimation[0].name = "Typing";
-  FallingAnimation[0].name = "Falling";
-  StandingAnimation[0].name = "Standing";
-  WavingAnimation[0].name = "Waving";
+  // TypingAnimation[0].name = "Typing";
+  // FallingAnimation[0].name = "Falling";
+  // StandingAnimation[0].name = "Standing";
+  // WavingAnimation[0].name = "Waving";
 
-  const { actions } = useAnimations(
-    [
-      TypingAnimation[0],
-      FallingAnimation[0],
-      StandingAnimation[0],
-      WavingAnimation[0],
-    ],
-    groupRef
-  );
+  // const { actions } = useAnimations(
+  //   [
+  //     TypingAnimation[0],
+  //     FallingAnimation[0],
+  //     StandingAnimation[0],
+  //     WavingAnimation[0],
+  //   ],
+  //   groupRef
+  // );
 
   // useFrame((state) => {
   //   if (headFollow) {
@@ -77,12 +77,12 @@ export function Avatar(props: JSX.IntrinsicElements["group"]) {
   // });
 
   // Play the typing animation
-  useEffect(() => {
-    actions["Waving"]?.reset().fadeIn(0.5).play();
-    return () => {
-      actions["Waving"]?.reset().fadeOut(0.5).stop();
-    };
-  }, []);
+  // useEffect(() => {
+  //   actions["Standing"]?.reset().fadeIn(0.5).play();
+  //   return () => {
+  //     actions["Standing"]?.reset().fadeOut(0.5).stop();
+  //   };
+  // }, [actions]);
 
   // // For the wireframe
   // useEffect(() => {
