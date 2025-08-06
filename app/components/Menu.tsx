@@ -35,7 +35,10 @@ const Menu = (props: {
     <>
       {/* Menu Toggle Button */}
       <motion.button
-        onClick={() => setMenuOpened(!menuOpened)}
+        onClick={() => {
+          console.log("menuOpened in menu", menuOpened);
+          setMenuOpened(!menuOpened);
+        }}
         className="fixed top-8 right-8 z-50 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:shadow-xl transition-all duration-300 hover:scale-110"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
