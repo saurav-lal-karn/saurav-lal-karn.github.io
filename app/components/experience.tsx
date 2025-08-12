@@ -4,8 +4,8 @@ import { useSpring, a, config as configConstants } from "@react-spring/three";
 import { animate, useMotionValue } from "motion/react";
 import { useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import { NewWorkspace } from "./NewWorkspace";
-import { NewAvatar } from "./NewAvatar";
+import { FinalWorkspace } from "./Workspace";
+import { FinalAvatar } from "./avatar";
 
 const Experience = (props: { section: number; menuOpened: boolean }) => {
   const { section, menuOpened } = props;
@@ -21,11 +21,11 @@ const Experience = (props: { section: number; menuOpened: boolean }) => {
 
   // Animate the camera position and lookAt based on the menu opened state
   useEffect(() => {
-    animate(cameraPositonX, menuOpened ? -5 : 0, {
+    animate(cameraPositonX, menuOpened ? -2 : 0, {
       duration: 0.5,
       ease: "easeInOut",
     });
-    animate(cameraLookAtX, menuOpened ? 5 : 0, {
+    animate(cameraLookAtX, menuOpened ? 2 : 0, {
       duration: 0.5,
       ease: "easeInOut",
     });
@@ -40,12 +40,9 @@ const Experience = (props: { section: number; menuOpened: boolean }) => {
     <>
       <ambientLight intensity={2} />
       {/* <OrbitControls /> */}
-      <group scale={0.8} position={[1.5, -0.5, 0]} rotation={[0, -1.2, 0]}>
-        <NewWorkspace />
-        {/* <group position={[1, 0, 1]} rotation={[1.6, 0, -1.0]}>
-          
-        </group> */}
-        <NewAvatar rotation={[0, 1, 0]} />
+      <group scale={1} position={[1.5, -0.5, 0]} rotation={[0, -1.2, 0]}>
+        <FinalWorkspace section={section} />
+        <FinalAvatar section={section} />
       </group>
 
       {/* <a.group
