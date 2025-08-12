@@ -21,7 +21,7 @@ export default function Home() {
           <ScrollManager section={section} setSection={setSection} />
           <Experience section={section} menuOpened={menuOpened} />
           <Scroll html>
-            <Interface />
+            <Interface onSectionChange={setSection} />
           </Scroll>
         </ScrollControls>
       </Canvas>

@@ -175,7 +175,7 @@ const Menu = (props: {
                   className="mt-6 pt-6 border-t border-gray-100"
                 >
                   <Link
-                    href="/resume.pdf"
+                    href="/saurav_resume.pdf"
                     className="flex items-center justify-center w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   >
                     <svg

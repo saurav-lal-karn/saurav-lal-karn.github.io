@@ -20,18 +20,23 @@ const Section = (props: { children: React.ReactNode }) => {
   );
 };
 
-export const Interface = () => {
+export const Interface = (props: {
+  onSectionChange: (section: number) => void;
+}) => {
+  const { onSectionChange } = props;
   return (
     <div className="flex flex-col items-center justify-center w-screen">
-      <HomeSection />
+      <HomeSection onSectionChange={onSectionChange} />
       <AboutSection />
       <ProjectsSection />
       <ContactSection />
+      <Footer />
     </div>
   );
 };
 
-const HomeSection = () => {
+const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
+  const { onSectionChange } = props;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -97,7 +102,7 @@ const HomeSection = () => {
           className="flex flex-wrap gap-4"
         >
           <Link
-            href="/resume.pdf"
+            href="/saurav_resume.pdf"
             className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
             <span>Download Resume</span>
@@ -116,8 +121,8 @@ const HomeSection = () => {
             </svg>
           </Link>
 
-          <Link
-            href="/contact"
+          <button
+            onClick={() => onSectionChange(3)}
             className="group inline-flex items-center px-8 py-4 bg-white text-gray-800 font-semibold rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 hover:scale-105"
           >
             <span>Contact Me</span>
@@ -134,10 +139,10 @@ const HomeSection = () => {
                 d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
               />
             </svg>
-          </Link>
+          </button>
 
-          <Link
-            href="/projects"
+          <button
+            onClick={() => onSectionChange(2)}
             className="group inline-flex items-center px-8 py-4 bg-white text-gray-800 font-semibold rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all duration-300 hover:scale-105"
           >
             <span>View Projects</span>
@@ -154,7 +159,7 @@ const HomeSection = () => {
                 d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
               />
             </svg>
-          </Link>
+          </button>
         </motion.div>
       </div>
     </Section>
@@ -515,19 +520,19 @@ const ContactSection = () => {
               {
                 icon: "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
                 title: "Email",
-                value: "saurav@example.com",
+                value: "sauravkarn541@gmail.com",
                 gradient: "from-blue-500 to-purple-500",
               },
               {
                 icon: "M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2h4a2 2 0 012 2z",
                 title: "LinkedIn",
-                value: "linkedin.com/in/sauravlalkarn",
+                value: "https://www.linkedin.com/in/saurav-lal-karn-4b9436a9/",
                 gradient: "from-green-500 to-blue-500",
               },
               {
                 icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
                 title: "GitHub",
-                value: "github.com/sauravlalkarn",
+                value: "https://github.com/saurav-lal-karn",
                 gradient: "from-purple-500 to-pink-500",
               },
             ].map((contact, index) => (
@@ -566,7 +571,25 @@ const ContactSection = () => {
                     <h3 className="text-lg font-semibold text-gray-800">
                       {contact.title}
                     </h3>
-                    <p className="text-gray-600">{contact.value}</p>
+                    {contact.title === "Email" ? (
+                      <a
+                        href={`mailto:${contact.value}`}
+                        className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {contact.value}
+                      </a>
+                    ) : contact.value.startsWith("http") ? (
+                      <a
+                        href={contact.value}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {contact.value}
+                      </a>
+                    ) : (
+                      <p className="text-gray-600">{contact.value}</p>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -591,7 +614,7 @@ const ContactSection = () => {
                 ideas to life.
               </p>
               <Link
-                href="/contact"
+                href="mailto:sauravkarn541@gmail.com"
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 <span>Get In Touch</span>
@@ -614,5 +637,18 @@ const ContactSection = () => {
         </motion.div>
       </div>
     </Section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="w-full bg-gray-900 text-white py-12">
+      <div className="container mx-auto px-4">
+        <p className="text-center text-gray-400">
+          &copy; {new Date().getFullYear()} Saurav Lal Karn. All rights
+          reserved.
+        </p>
+      </div>
+    </footer>
   );
 };
