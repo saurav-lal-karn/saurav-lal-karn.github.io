@@ -5,8 +5,9 @@ const Menu = (props: {
   onSectionChange: (section: number) => void;
   menuOpened: boolean;
   setMenuOpened: (menuOpened: boolean) => void;
+  currentSection: number;
 }) => {
-  const { onSectionChange, menuOpened, setMenuOpened } = props;
+  const { onSectionChange, menuOpened, setMenuOpened, currentSection } = props;
 
   const menuItems = [
     {
@@ -36,7 +37,6 @@ const Menu = (props: {
       {/* Menu Toggle Button */}
       <motion.button
         onClick={() => {
-          console.log("menuOpened in menu", menuOpened);
           setMenuOpened(!menuOpened);
         }}
         className="fixed top-8 right-8 z-50 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:shadow-xl transition-all duration-300 hover:scale-110"
@@ -126,9 +126,19 @@ const Menu = (props: {
                           onSectionChange(item.section);
                           setMenuOpened(false);
                         }}
-                        className="w-full group flex items-center space-x-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 hover:shadow-md"
+                        className={`w-full group flex items-center space-x-4 p-4 rounded-xl transition-all duration-300 hover:shadow-md ${
+                          currentSection === item.section
+                            ? "bg-gradient-to-r from-blue-100 to-purple-100 shadow-md border border-blue-200"
+                            : "hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
+                        }`}
                       >
-                        <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <div
+                          className={`w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${
+                            currentSection === item.section
+                              ? "bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg"
+                              : "bg-gradient-to-r from-blue-500 to-purple-500"
+                          }`}
+                        >
                           <svg
                             className="w-5 h-5 text-white"
                             fill="none"
@@ -143,7 +153,13 @@ const Menu = (props: {
                             />
                           </svg>
                         </div>
-                        <span className="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
+                        <span
+                          className={`text-lg font-semibold transition-colors duration-300 ${
+                            currentSection === item.section
+                              ? "text-blue-700"
+                              : "text-gray-800 group-hover:text-blue-600"
+                          }`}
+                        >
                           {item.name}
                         </span>
                       </button>
