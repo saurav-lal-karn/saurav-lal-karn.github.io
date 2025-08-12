@@ -8,6 +8,7 @@ import React, { useEffect, useRef } from "react";
 import { useGraph } from "@react-three/fiber";
 import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
 import { GLTF, SkeletonUtils } from "three-stdlib";
+import { useSpring, config as configConstants, a } from "@react-spring/three";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -56,63 +57,83 @@ export function FinalAvatar(
 
   // Animations here
   const { animations: TypingAnimation } = useFBX("/animations/Typing.fbx");
-  const { animations: PointingAnimation } = useFBX("/animations/Pointing.fbx");
-  // const { animations: FallingAnimation } = useFBX(
-  //   "/animations/Falling_Idle.fbx"
-  // );
-  // const { animations: StandingAnimation } = useFBX(
-  //   "/animations/Standing_Idle.fbx"
-  // );
+  const { animations: SittingPointingAnimation } = useFBX(
+    "/animations/Sitting_And_Pointing.fbx"
+  );
+  const { animations: StandingAnimation } = useFBX(
+    "/animations/Standing_Idle.fbx"
+  );
   const { animations: WavingAnimation } = useFBX("/animations/Waving.fbx");
 
   // Remove root motion from animations
   removeRootMotion(TypingAnimation[0]);
-  removeRootMotion(PointingAnimation[0]);
+  removeRootMotion(SittingPointingAnimation[0]);
   removeRootMotion(WavingAnimation[0]);
+  removeRootMotion(StandingAnimation[0]);
 
   TypingAnimation[0].name = "Typing";
-  PointingAnimation[0].name = "Pointing";
-  // FallingAnimation[0].name = "Falling";
-  // StandingAnimation[0].name = "Standing";
+  StandingAnimation[0].name = "Standing";
   WavingAnimation[0].name = "Waving";
-
+  SittingPointingAnimation[0].name = "SittingPointing";
   const { actions } = useAnimations(
     [
       TypingAnimation[0],
-      PointingAnimation[0],
-      // FallingAnimation[0],
-      // StandingAnimation[0],
+      StandingAnimation[0],
       WavingAnimation[0],
+      SittingPointingAnimation[0],
     ],
     groupRef
   );
 
+  const avatarProps = useSpring({
+    rotation:
+      section === 0
+        ? [0, Math.PI / 3, 0] // Home - facing forward with slight right turn
+        : section === 1
+        ? [0, 0.103, 0] // About - facing left
+        : section === 2
+        ? [0, Math.PI, 0] // Projects - slight left turn
+        : section === 3
+        ? [0, Math.PI / 3, 0] // Contact - facing right
+        : [0, 0, 0], // Default - facing forward
+    position:
+      section === 0
+        ? [0, 0, 0.544]
+        : section === 1
+        ? [0.321, -0.154, 0.567]
+        : section === 2
+        ? [-0.305, -0.19, -0.608]
+        : section === 3
+        ? [0, 0, 0.544]
+        : [0, 0, 0],
+    config: configConstants.slow,
+  });
+
   // Play the typing animation
   useEffect(() => {
     if (section === 0) {
-      actions["Pointing"]?.reset().fadeOut(0.5).stop();
+      actions["SittingPointing"]?.reset().fadeOut(0.5).stop();
       actions["Waving"]?.reset().fadeIn(0.5).play();
     } else if (section === 1) {
       actions["Waving"]?.reset().fadeOut(0.5).stop();
-      actions["Typing"]?.reset().fadeIn(0.5).stop();
-      actions["Pointing"]?.reset().fadeIn(0.5).play();
-    } else if (section === 2) {
-      actions["Waving"]?.reset().fadeOut(0.5).stop();
-      actions["Pointing"]?.reset().fadeOut(0.5).stop();
-      actions["Typing"]?.reset().fadeIn(0.5).play();
-    } else {
-      actions["Waving"]?.reset().fadeOut(0.5).stop();
-      actions["Pointing"]?.reset().fadeOut(0.5).stop();
       actions["Typing"]?.reset().fadeOut(0.5).stop();
+      actions["SittingPointing"]?.reset().fadeIn(0.5).play();
+    } else if (section === 2) {
+      actions["SittingPointing"]?.reset().fadeOut(0.5).stop();
+      actions["Standing"]?.reset().fadeOut(0.5).stop();
+      actions["Typing"]?.reset().fadeIn(0.5).play();
+    } else if (section === 3) {
+      actions["Typing"]?.reset().fadeOut(0.5).stop();
+      actions["Standing"]?.reset().fadeIn(0.5).play();
     }
-    // return () => {
-    //   actions["Waving"]?.reset().fadeOut(0.5);
-    // };
   }, [section]);
 
   return (
     <group ref={groupRef} {...restProps} dispose={null}>
-      <group>
+      <a.group
+        rotation={avatarProps.rotation as unknown as [number, number, number]}
+        position={avatarProps.position as unknown as [number, number, number]}
+      >
         <primitive object={nodes.Hips} />
         <skinnedMesh
           geometry={nodes.Wolf3D_Hair.geometry}
@@ -176,7 +197,7 @@ export function FinalAvatar(
           morphTargetDictionary={nodes.Wolf3D_Teeth.morphTargetDictionary}
           morphTargetInfluences={nodes.Wolf3D_Teeth.morphTargetInfluences}
         />
-      </group>
+      </a.group>
     </group>
   );
 }

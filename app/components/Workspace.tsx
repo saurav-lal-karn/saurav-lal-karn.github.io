@@ -99,9 +99,24 @@ export function FinalWorkspace(
     scale: section === 0 ? [1, 1, 1] : [0, 0, 0],
     config: configConstants.wobbly,
   });
+
+  const chairProps = useSpring({
+    // rotation: section === 1 ? [Math.PI, -0.037, Math.PI] : [0, 0, 0],
+    rotation: section === 1 ? [0, Math.PI, 0] : [0, 0, 0],
+    scale: section === 0 || section === 3 ? [0, 0, 0] : [1, 1, 1],
+    config: configConstants.slow,
+  });
+
+  const deskComponentProps = useSpring({
+    scale: section === 2 ? [1, 1, 1] : [0, 0, 0],
+    config: configConstants.slow,
+  });
+
   return (
     <group {...restProps} dispose={null}>
-      <a.group>
+      <a.group
+        scale={deskComponentProps.scale as unknown as [number, number, number]}
+      >
         <group
           position={[-0.363, 1.204, -1.657]}
           scale={[1.608, 1.274, 1]}
@@ -119,7 +134,9 @@ export function FinalWorkspace(
           </group>
         </group>
       </a.group>
-      <a.group>
+      <a.group
+        scale={deskComponentProps.scale as unknown as [number, number, number]}
+      >
         <group
           position={[0.741, 1.019, -1.464]}
           rotation={[0, -0.777, 0]}
@@ -149,7 +166,9 @@ export function FinalWorkspace(
         </group>
       </a.group>
 
-      <a.group>
+      <a.group
+        scale={deskComponentProps.scale as unknown as [number, number, number]}
+      >
         <group position={[0.01, 0.946, -1.292]} name="mouse">
           <mesh
             geometry={nodes.Mouse.geometry}
@@ -158,7 +177,9 @@ export function FinalWorkspace(
           />
         </group>
       </a.group>
-      <a.group>
+      <a.group
+        scale={deskComponentProps.scale as unknown as [number, number, number]}
+      >
         <mesh
           geometry={nodes.desk.geometry}
           material={materials.BlackCoatSteel}
@@ -276,7 +297,9 @@ export function FinalWorkspace(
           material={materials.mat20}
         />
       </group>
-      <a.group>
+      <a.group
+        scale={deskComponentProps.scale as unknown as [number, number, number]}
+      >
         <mesh
           geometry={nodes.Keyboard1.geometry}
           material={materials["lambert3SG.001"]}
@@ -322,9 +345,12 @@ export function FinalWorkspace(
           material={materials.carpetDarker}
         />
       </group> */}
-      <a.group>
+      <a.group
+        rotation={chairProps.rotation as unknown as [number, number, number]}
+        scale={chairProps.scale as unknown as [number, number, number]}
+      >
         <group
-          position={[-0.322, 0, -0.567]}
+          position={[-0.315, 0, -0.595]}
           scale={[1.296, 1.296, 1]}
           name="chair"
         >

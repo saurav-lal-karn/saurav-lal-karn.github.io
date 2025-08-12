@@ -1,115 +1,97 @@
-"use client";
+import { useEffect, useRef, useState } from "react";
 
-import { useEffect, useState, useCallback } from "react";
+const CURSOR_SPEED = 0.08;
 
-interface CursorProps {
-  size?: number;
-  color?: string;
-  hoverColor?: string;
-}
+let mouseX = 0;
+let mouseY = 0;
+let outlineX = 0;
+let outlineY = 0;
+const Cursor = () => {
+  const cursorOutline = useRef<HTMLDivElement>(null);
+  const [hoverButton, setHoverButton] = useState(false);
 
-const Cursor = ({
-  size = 16,
-  color = "#ffffff",
-  hoverColor = "#ff6b6b",
-}: CursorProps) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const animate = () => {
+    const distX = mouseX - outlineX;
+    const distY = mouseY - outlineY;
 
-  // Throttled mouse move handler for better performance
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    // Use requestAnimationFrame to sync with browser's render cycle
-    requestAnimationFrame(() => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
-    });
-  }, []);
+    outlineX = outlineX + distX * CURSOR_SPEED;
+    outlineY = outlineY + distY * CURSOR_SPEED;
 
-  const handleMouseEnter = useCallback(() => {
-    setIsVisible(true);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsVisible(false);
-  }, []);
-
-  const handleElementHover = useCallback((e: Event) => {
-    const target = e.target as HTMLElement;
-
-    // Skip if target is a canvas or 3D element
-    if (target.tagName === "CANVAS" || target.closest("canvas")) {
-      setIsHovering(false);
-      return;
+    if (cursorOutline.current) {
+      cursorOutline.current.style.left = `${outlineX}px`;
+      cursorOutline.current.style.top = `${outlineY}px`;
     }
+    requestAnimationFrame(animate);
+  };
 
-    const isInteractive =
-      target.tagName === "BUTTON" ||
-      target.tagName === "A" ||
-      target.tagName === "INPUT" ||
-      target.tagName === "TEXTAREA" ||
-      target.tagName === "SELECT" ||
-      !!target.closest("[data-cursor-hover]") ||
-      target.style.cursor === "pointer";
-
-    setIsHovering(isInteractive);
-  }, []);
-
-  const handleElementLeave = useCallback(() => {
-    setIsHovering(false);
+  useEffect(() => {
+    const mouseEventsListener = (document as Document).addEventListener(
+      "mousemove",
+      function (event) {
+        mouseX = event.pageX;
+        mouseY = event.pageY;
+      }
+    );
+    const animateEvent = requestAnimationFrame(animate);
+    return () => {
+      document.removeEventListener("mousemove", function (event) {
+        mouseX = event.pageX;
+        mouseY = event.pageY;
+      });
+      cancelAnimationFrame(animateEvent);
+    };
   }, []);
 
   useEffect(() => {
-    // Add event listeners with passive option for better performance
-    document.addEventListener("mousemove", handleMouseMove, { passive: true });
-    document.addEventListener("mouseenter", handleMouseEnter);
-    document.addEventListener("mouseleave", handleMouseLeave);
-    document.addEventListener("mouseover", handleElementHover, {
-      passive: true,
-    });
-    document.addEventListener("mouseout", handleElementLeave);
-
-    // Hide default cursor
-    document.body.style.cursor = "none";
-
+    const mouseEventListener = (document as Document).addEventListener(
+      "mouseover",
+      function (e) {
+        if (
+          (e.target as HTMLElement).tagName.toLowerCase() === "button" ||
+          // check parent is button
+          (e.target as HTMLElement).parentElement?.tagName.toLowerCase() ===
+            "button" ||
+          // check is input or textarea
+          (e.target as HTMLElement).tagName.toLowerCase() === "input" ||
+          (e.target as HTMLElement).tagName.toLowerCase() === "textarea"
+        ) {
+          setHoverButton(true);
+        } else {
+          setHoverButton(false);
+        }
+      }
+    );
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseenter", handleMouseEnter);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("mouseover", handleElementHover);
-      document.removeEventListener("mouseout", handleElementLeave);
-      document.body.style.cursor = "auto";
+      document.removeEventListener("mouseover", function (e) {
+        if (
+          (e.target as HTMLElement).tagName.toLowerCase() === "button" ||
+          // check parent is button
+          (e.target as HTMLElement).parentElement?.tagName.toLowerCase() ===
+            "button" ||
+          // check is input or textarea
+          (e.target as HTMLElement).tagName.toLowerCase() === "input" ||
+          (e.target as HTMLElement).tagName.toLowerCase() === "textarea"
+        ) {
+          setHoverButton(true);
+        } else {
+          setHoverButton(false);
+        }
+      });
     };
-  }, [
-    handleMouseMove,
-    handleMouseEnter,
-    handleMouseLeave,
-    handleElementHover,
-    handleElementLeave,
-  ]);
-
-  const getCursorColor = () => {
-    return isHovering ? hoverColor : color;
-  };
-
-  const getCursorSize = () => {
-    return isHovering ? size * 1.2 : size;
-  };
-
-  if (!isVisible) return null;
+  }, []);
 
   return (
-    <div
-      className="fixed z-50 rounded-full transition-all duration-150 ease-out cursor-optimized"
-      style={{
-        left: position.x - getCursorSize() / 2,
-        top: position.y - getCursorSize() / 2,
-        width: getCursorSize(),
-        height: getCursorSize(),
-        backgroundColor: getCursorColor(),
-        opacity: 0.8,
-      }}
-    />
+    <>
+      <div
+        className={`z-50 fixed -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none transition-transform
+        ${
+          hoverButton
+            ? "bg-transparent border-2 border-blue-600 w-5 h-5"
+            : "bg-gradient-to-r from-blue-500 to-purple-500 w-3 h-3"
+        }`}
+        ref={cursorOutline}
+      ></div>
+    </>
   );
 };
 

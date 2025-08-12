@@ -44,16 +44,6 @@ const Experience = (props: { section: number; menuOpened: boolean }) => {
         <FinalWorkspace section={section} />
         <FinalAvatar section={section} />
       </group>
-
-      {/* <a.group
-      // scale={groupProps.scale as unknown as [number, number, number]}
-      // position={groupProps.position as unknown as [number, number, number]}
-      >
-        <NewWorkspace /> */}
-      {/* <group rotation={[0, Math.PI / 5, 0]}> */}
-      {/* <Avatar /> */}
-      {/* </group> */}
-      {/* </a.group> */}
     </>
   );
 };
