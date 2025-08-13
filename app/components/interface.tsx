@@ -13,7 +13,7 @@ const Section = (props: { children: React.ReactNode }) => {
       initial={{ opacity: 0, y: 100 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="h-screen w-screen max-w-screen-2xl flex flex-col items-start justify-center"
+      className="min-h-screen w-full max-w-screen-2xl flex flex-col items-start justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20"
     >
       {children}
     </motion.section>
@@ -25,7 +25,7 @@ export const Interface = (props: {
 }) => {
   const { onSectionChange } = props;
   return (
-    <div className="flex flex-col items-center justify-center w-screen">
+    <div className="flex flex-col items-center justify-center w-full">
       <HomeSection onSectionChange={onSectionChange} />
       <AboutSection />
       <ProjectsSection />
@@ -42,7 +42,7 @@ const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
 
   return (
     <Section>
-      <div className="space-y-8 w-1/2">
+      <div className="space-y-6 sm:space-y-8 w-full max-w-4xl">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -56,9 +56,9 @@ const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
               isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }
             }
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/20 rounded-full"
+            className="inline-flex items-center justify-center px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200/20 rounded-full"
           >
-            <span className="text-sm font-medium text-blue-600">
+            <span className="text-xs sm:text-sm font-medium text-blue-600">
               Available for opportunities
             </span>
           </motion.div>
@@ -67,7 +67,7 @@ const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent leading-tight"
           >
             Hi, I&apos;m{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -79,7 +79,7 @@ const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-2xl md:text-3xl font-semibold text-gray-700"
+            className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-700"
           >
             Software Engineer & Full Stack Developer
           </motion.h2>
@@ -88,7 +88,7 @@ const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-xl text-gray-600 max-w-2xl leading-relaxed"
+            className="text-lg sm:text-xl text-gray-600 max-w-2xl leading-relaxed"
           >
             Crafting robust, powerful, and human-centered full stack solutions
             with modern technologies and clean code principles.
@@ -99,15 +99,15 @@ const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.8 }}
-          className="flex flex-wrap gap-4"
+          className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
         >
           <Link
             href="/saurav_resume.pdf"
-            className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base"
           >
             <span>Download Resume</span>
             <svg
-              className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
+              className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -123,11 +123,11 @@ const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
 
           <button
             onClick={() => onSectionChange(3)}
-            className="group inline-flex items-center px-8 py-4 bg-white text-gray-800 font-semibold rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 hover:scale-105"
+            className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-gray-800 font-semibold rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base"
           >
             <span>Contact Me</span>
             <svg
-              className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
+              className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -143,11 +143,11 @@ const HomeSection = (props: { onSectionChange: (section: number) => void }) => {
 
           <button
             onClick={() => onSectionChange(2)}
-            className="group inline-flex items-center px-8 py-4 bg-white text-gray-800 font-semibold rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all duration-300 hover:scale-105"
+            className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-gray-800 font-semibold rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base"
           >
             <span>View Projects</span>
             <svg
-              className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
+              className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -185,7 +185,7 @@ const AboutSection = () => {
 
   return (
     <Section>
-      <div className="space-y-8 w-1/2">
+      <div className="space-y-6 sm:space-y-8 w-full max-w-4xl">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -197,7 +197,7 @@ const AboutSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
           >
             About Me
           </motion.h1>
@@ -205,7 +205,7 @@ const AboutSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl text-gray-600 max-w-3xl leading-relaxed"
+            className="text-lg sm:text-xl text-gray-600 max-w-3xl leading-relaxed"
           >
             I&apos;m a passionate software engineer with expertise in building
             scalable web applications. I love creating elegant solutions to
@@ -224,7 +224,7 @@ const AboutSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-2xl font-semibold text-gray-800"
+            className="text-xl sm:text-2xl font-semibold text-gray-800"
           >
             Technologies I Work With
           </motion.h3>
@@ -232,7 +232,7 @@ const AboutSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4"
           >
             {skills.map((skill, index) => (
               <motion.div
@@ -248,7 +248,7 @@ const AboutSection = () => {
                   delay: 0.8 + index * 0.1,
                   ease: "easeOut",
                 }}
-                className={`group relative p-4 rounded-xl bg-gradient-to-r ${skill.color} text-white font-medium text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer`}
+                className={`group relative p-3 sm:p-4 rounded-xl bg-gradient-to-r ${skill.color} text-white font-medium text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer text-sm sm:text-base`}
               >
                 <span className="relative z-10">{skill.name}</span>
                 <div className="absolute inset-0 bg-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -261,7 +261,7 @@ const AboutSection = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, delay: 1.0 }}
-          className="grid md:grid-cols-3 gap-6 mt-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mt-8"
         >
           {[
             {
@@ -297,13 +297,13 @@ const AboutSection = () => {
                 delay: 1.1 + index * 0.2,
                 ease: "easeOut",
               }}
-              className="p-6 bg-white rounded-xl shadow-lg border border-gray-100"
+              className="p-4 sm:p-6 bg-white rounded-xl shadow-lg border border-gray-100"
             >
               <div
-                className={`w-12 h-12 bg-gradient-to-r ${item.gradient} rounded-lg flex items-center justify-center mb-4`}
+                className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r ${item.gradient} rounded-lg flex items-center justify-center mb-3 sm:mb-4`}
               >
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -316,10 +316,12 @@ const AboutSection = () => {
                   />
                 </svg>
               </div>
-              <h4 className="text-lg font-semibold text-gray-800 mb-2">
+              <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">
                 {item.title}
               </h4>
-              <p className="text-gray-600">{item.description}</p>
+              <p className="text-sm sm:text-base text-gray-600">
+                {item.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>
@@ -334,7 +336,7 @@ const ProjectsSection = () => {
 
   return (
     <Section>
-      <div className="space-y-8 w-1/2">
+      <div className="space-y-6 sm:space-y-8 w-full max-w-4xl">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -346,7 +348,7 @@ const ProjectsSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
           >
             Featured Projects
           </motion.h1>
@@ -354,7 +356,7 @@ const ProjectsSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl text-gray-600 max-w-3xl"
+            className="text-lg sm:text-xl text-gray-600 max-w-3xl"
           >
             Here are some of the projects I&apos;ve worked on that showcase my
             skills and passion for building great software.
@@ -365,7 +367,7 @@ const ProjectsSection = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="grid md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
         >
           {[
             {
@@ -409,10 +411,10 @@ const ProjectsSection = () => {
               className="group bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               <div
-                className={`h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center`}
+                className={`h-32 sm:h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center`}
               >
                 <svg
-                  className="w-16 h-16 text-white"
+                  className="w-12 h-12 sm:w-16 sm:h-16 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -425,16 +427,18 @@ const ProjectsSection = () => {
                   />
                 </svg>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 mb-4">{project.description}</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-4">
+                  {project.description}
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <span
                       key={tag.name}
-                      className={`px-3 py-1 ${tag.color} text-sm rounded-full`}
+                      className={`px-2 sm:px-3 py-1 ${tag.color} text-xs sm:text-sm rounded-full`}
                     >
                       {tag.name}
                     </span>
@@ -453,11 +457,11 @@ const ProjectsSection = () => {
         >
           <Link
             href="/projects"
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base"
           >
             <span>View All Projects</span>
             <svg
-              className="ml-2 w-5 h-5"
+              className="ml-2 w-4 h-4 sm:w-5 sm:h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -482,7 +486,7 @@ const ContactSection = () => {
 
   return (
     <Section>
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8 w-full max-w-4xl">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -494,7 +498,7 @@ const ContactSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
           >
             Let&apos;s Connect
           </motion.h1>
@@ -502,7 +506,7 @@ const ContactSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl text-gray-600 max-w-3xl"
+            className="text-lg sm:text-xl text-gray-600 max-w-3xl"
           >
             I&apos;m always interested in new opportunities and collaborations.
             Feel free to reach out!
@@ -513,9 +517,9 @@ const ContactSection = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="grid md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
         >
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {[
               {
                 icon: "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
@@ -547,14 +551,14 @@ const ContactSection = () => {
                   delay: 0.6 + index * 0.1,
                   ease: "easeOut",
                 }}
-                className="p-6 bg-white rounded-xl shadow-lg border border-gray-100"
+                className="p-4 sm:p-6 bg-white rounded-xl shadow-lg border border-gray-100"
               >
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-3 sm:space-x-4">
                   <div
-                    className={`w-12 h-12 bg-gradient-to-r ${contact.gradient} rounded-lg flex items-center justify-center`}
+                    className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r ${contact.gradient} rounded-lg flex items-center justify-center`}
                   >
                     <svg
-                      className="w-6 h-6 text-white"
+                      className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -568,13 +572,13 @@ const ContactSection = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">
                       {contact.title}
                     </h3>
                     {contact.title === "Email" ? (
                       <a
                         href={`mailto:${contact.value}`}
-                        className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                        className="text-sm sm:text-base text-gray-600 hover:text-blue-600 transition-colors duration-200 break-all"
                       >
                         {contact.value}
                       </a>
@@ -583,12 +587,14 @@ const ContactSection = () => {
                         href={contact.value}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                        className="text-sm sm:text-base text-gray-600 hover:text-blue-600 transition-colors duration-200 break-all"
                       >
                         {contact.value}
                       </a>
                     ) : (
-                      <p className="text-gray-600">{contact.value}</p>
+                      <p className="text-sm sm:text-base text-gray-600">
+                        {contact.value}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -603,23 +609,23 @@ const ContactSection = () => {
                 delay: 1.0,
                 ease: "easeOut",
               }}
-              className="p-6 bg-white rounded-xl shadow-lg border border-gray-100"
+              className="p-4 sm:p-6 bg-white rounded-xl shadow-lg border border-gray-100"
             >
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+              <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4">
                 Ready to work together?
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
                 I&apos;m currently available for freelance opportunities and
                 full-time positions. Let&apos;s discuss how we can bring your
                 ideas to life.
               </p>
               <Link
                 href="mailto:sauravkarn541@gmail.com"
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base"
               >
                 <span>Get In Touch</span>
                 <svg
-                  className="ml-2 w-5 h-5"
+                  className="ml-2 w-4 h-4 sm:w-5 sm:h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -642,9 +648,9 @@ const ContactSection = () => {
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-gray-900 text-white py-12">
+    <footer className="w-full bg-gray-900 text-white py-8 sm:py-12">
       <div className="container mx-auto px-4">
-        <p className="text-center text-gray-400">
+        <p className="text-center text-sm sm:text-base text-gray-400">
           &copy; {new Date().getFullYear()} Saurav Lal Karn. All rights
           reserved.
         </p>
