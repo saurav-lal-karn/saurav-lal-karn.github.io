@@ -39,7 +39,7 @@ const Menu = (props: {
         onClick={() => {
           setMenuOpened(!menuOpened);
         }}
-        className="fixed top-8 right-8 z-50 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:shadow-xl transition-all duration-300 hover:scale-110"
+        className="fixed top-4 sm:top-8 right-4 sm:right-8 z-50 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center hover:shadow-xl transition-all duration-300 hover:scale-110"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -95,20 +95,20 @@ const Menu = (props: {
                 ease: [0.25, 0.1, 0.25, 1],
                 duration: 0.6,
               }}
-              className="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 border-l border-gray-200"
+              className="fixed top-0 right-0 h-full w-full sm:w-80 bg-white shadow-2xl z-50 border-l border-gray-200"
             >
               {/* Menu Header */}
               <motion.div
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
-                className="p-8 border-b border-gray-100"
+                className="p-4 sm:p-8 border-b border-gray-100"
               >
                 <p className="text-gray-600 mt-2">Explore my portfolio</p>
               </motion.div>
 
               {/* Menu Items */}
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <nav className="space-y-2">
                   {menuItems.map((item, index) => (
                     <motion.div
