@@ -7,7 +7,6 @@ import ToolboxSection from "./ToolboxSection";
 import SystemDesignNotes from "./SystemDesignNotes";
 import RoadmapMap from "./RoadmapMap";
 import ContactSection from "./ContactSection";
-import DustParticles from "./DustParticles";
 import {
   Compass,
   FileText,
@@ -276,9 +275,6 @@ export default function ParchmentScroll() {
           </filter>
         </defs>
       </svg>
-
-      {/* Ambient background dust particles */}
-      <DustParticles />
 
       {/* CLOSED SCROLL HERO OVERLAY (WAX SEAL STATE) */}
       <AnimatePresence>

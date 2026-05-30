@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import type { Project } from "../types";
 import {
   Pin,
@@ -107,13 +106,10 @@ export default function ProjectsSection() {
           {projectsData.map((project, index) => {
             const isExpanded = selectedProject === project.id;
             return (
-              <motion.div
+              <div
                 key={project.id}
-                initial={{ opacity: 0, scale: 0.96 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative bg-parchment-light/80 hover:bg-parchment-light border border-gold-ancient/25 rounded-lg p-6 pt-8 parchment-shadow transition-colors duration-300 group flex flex-col justify-between"
+                className="relative bg-parchment-light/80 hover:bg-parchment-light border border-gold-ancient/25 rounded-lg p-6 pt-8 parchment-shadow transition-colors duration-300 group flex flex-col justify-between animate-fade-in-scale"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Decorative Scroll Pin (Simulating tack pinning) */}
                 <div className="absolute top-3 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none group-hover:translate-y-[-2px] transition-transform duration-300">
@@ -190,15 +186,17 @@ export default function ProjectsSection() {
                     </span>
                   </button>
 
-                  <AnimatePresence initial={false}>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.18, ease: "easeOut" }}
-                        className="overflow-hidden bg-parchment-light/95 border border-gold-ancient/20 rounded p-4 mt-2 font-serif-antique text-xs text-ink-faded leading-relaxed relative"
-                      >
+                  <div
+                    className="grid duration-300 ease-out"
+                    style={{
+                      gridTemplateRows: isExpanded ? "1fr" : "0fr",
+                      opacity: isExpanded ? 1 : 0,
+                      transition: "grid-template-rows 0.3s ease-out, opacity 0.3s ease-out",
+                      willChange: isExpanded ? "auto" : "grid-template-rows, opacity",
+                    }}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="bg-parchment-light/95 border border-gold-ancient/20 rounded p-4 mt-2 font-serif-antique text-xs text-ink-faded leading-relaxed relative">
                         <p className="font-sans font-bold text-ink-dark/80 uppercase text-[9px] tracking-widest mb-1">
                           Reflections & Hard Trade-offs:
                         </p>
@@ -206,11 +204,11 @@ export default function ProjectsSection() {
                         <span className="absolute bottom-1 right-2 font-cursive text-xl text-gold-ancient/40 select-none">
                           Karn
                         </span>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

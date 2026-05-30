@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import {
   Briefcase,
   Code,
@@ -179,13 +178,10 @@ export default function JourneyTimeline() {
             const isOpen = activeEvent === event.id;
 
             return (
-              <motion.div
+              <div
                 key={event.id}
-                initial={{ opacity: 0, x: -15 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="relative group"
+                className="relative group animate-fade-in-left"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Year Badge (Desktop Sided Column) */}
                 <span className="hidden md:block absolute -left-[188px] top-1.5 w-36 text-right font-mono-antique text-xs text-ink-faded tracking-widest font-semibold uppercase">
@@ -254,33 +250,33 @@ export default function JourneyTimeline() {
                   </p>
 
                   {/* Expandable historical records details */}
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.05, ease: "easeInOut" }}
-                        className="overflow-hidden"
-                      >
-                        <div className="border-t border-ink-faded/10 pt-4 space-y-2.5 mt-4">
-                          {event.details.map((detail, idx) => (
-                            <div
-                              key={idx}
-                              className="flex gap-2 items-start text-xs md:text-sm font-serif-antique text-ink-faded/95 leading-relaxed"
-                            >
-                              <code className="text-[10px] font-mono-antique text-gold-ancient mt-1">
-                                {"[" + (idx + 1) + "]"}
-                              </code>
-                              <span>{detail}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  <div
+                    className="grid duration-300 ease-out"
+                    style={{
+                      gridTemplateRows: isOpen ? "1fr" : "0fr",
+                      opacity: isOpen ? 1 : 0,
+                      transition: "grid-template-rows 0.3s ease-out, opacity 0.3s ease-out",
+                      willChange: isOpen ? "auto" : "grid-template-rows, opacity",
+                    }}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="border-t border-ink-faded/10 pt-4 space-y-2.5 mt-4">
+                        {event.details.map((detail, idx) => (
+                          <div
+                            key={idx}
+                            className="flex gap-2 items-start text-xs md:text-sm font-serif-antique text-ink-faded/95 leading-relaxed"
+                          >
+                            <code className="text-[10px] font-mono-antique text-gold-ancient mt-1">
+                              {"[" + (idx + 1) + "]"}
+                            </code>
+                            <span>{detail}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
