@@ -3,6 +3,7 @@ export interface JourneyEvent {
   year: string;
   title: string;
   category: string;
+  location?: string;
   description: string;
   details: string[];
 }

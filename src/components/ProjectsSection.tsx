@@ -113,7 +113,7 @@ export default function ProjectsSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative bg-parchment-light/80 hover:bg-parchment-light border border-gold-ancient/25 rounded-lg p-6 pt-8 parchment-shadow transition-all duration-300 group flex flex-col justify-between"
+                className="relative bg-parchment-light/80 hover:bg-parchment-light border border-gold-ancient/25 rounded-lg p-6 pt-8 parchment-shadow transition-colors duration-300 group flex flex-col justify-between"
               >
                 {/* Decorative Scroll Pin (Simulating tack pinning) */}
                 <div className="absolute top-3 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none group-hover:translate-y-[-2px] transition-transform duration-300">
@@ -132,7 +132,7 @@ export default function ProjectsSection() {
                     <Pin className="w-3.5 h-3.5 text-gold-ancient/40 group-hover:text-gold-ancient transition-colors duration-300" />
                   </div>
 
-                  <h3 className="font-display-antique text-xl text-ink-dark font-medium group-hover:text-gold-ancient transition-all duration-300 mb-4 inline-flex items-center gap-1.5">
+                  <h3 className="font-display-antique text-xl text-ink-dark font-medium group-hover:text-gold-ancient transition-colors duration-200 mb-4 inline-flex items-center gap-1.5">
                     {project.title}
                   </h3>
 
@@ -177,7 +177,7 @@ export default function ProjectsSection() {
                   <button
                     onClick={() => toggleExpand(project.id)}
                     id={`project-expand-btn-${project.id}`}
-                    className="w-full flex items-center justify-between text-left py-2 font-serif-antique text-xs text-gold-ancient hover:text-gold-ancient font-semibold border-t border-dashed border-gold-ancient/15 hover:border-gold-ancient/45 hover:bg-gold-ancient/5 px-2 rounded transition-all transition-colors duration-200 mt-2"
+                    className="w-full flex items-center justify-between text-left py-2 font-serif-antique text-xs text-gold-ancient hover:text-gold-ancient font-semibold border-t border-dashed border-gold-ancient/15 hover:border-gold-ancient/45 hover:bg-gold-ancient/5 px-2 rounded transition-colors duration-200 mt-2"
                   >
                     <span className="flex items-center gap-1.5 font-sans font-medium tracking-wide">
                       <BookOpen className="w-3.5 h-3.5" />
@@ -196,7 +196,7 @@ export default function ProjectsSection() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: 0.18, ease: "easeOut" }}
                         className="overflow-hidden bg-parchment-light/95 border border-gold-ancient/20 rounded p-4 mt-2 font-serif-antique text-xs text-ink-faded leading-relaxed relative"
                       >
                         <p className="font-sans font-bold text-ink-dark/80 uppercase text-[9px] tracking-widest mb-1">

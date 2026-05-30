@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Mail, Github, Linkedin, Send, CheckCircle2, ShieldCheck } from 'lucide-react';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import {
+  Mail,
+  Github,
+  Linkedin,
+  Send,
+  CheckCircle2,
+  ShieldCheck,
+} from "lucide-react";
 
 export default function ContactSection() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [isDispatched, setIsDispatched] = useState(false);
   const [isSealing, setIsSealing] = useState(false);
 
@@ -19,34 +26,38 @@ export default function ContactSection() {
       setIsSealing(false);
       setIsDispatched(true);
       // Reset inputs
-      setName('');
-      setEmail('');
-      setMessage('');
+      setName("");
+      setEmail("");
+      setMessage("");
     }, 2000);
   };
 
   return (
-    <div id="contact-section" className="py-16 px-4 md:px-8 manuscript-lines relative">
+    <div
+      id="contact-section"
+      className="py-16 px-4 md:px-8 manuscript-lines relative"
+    >
       <div className="max-w-xl mx-auto">
-        
         {/* Title */}
         <div className="text-center mb-12">
-          <div className="font-cursive text-3xl text-gold-ancient/90 mb-1">Dispatch Message</div>
+          <div className="font-cursive text-3xl text-gold-ancient/90 mb-1">
+            Dispatch Message
+          </div>
           <h2 className="font-display-antique text-3xl md:text-4xl text-ink-dark font-medium tracking-wide relative inline-block">
             Apply Seal & Send
             <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-[1px] bg-gold-ancient" />
           </h2>
           <p className="mt-4 text-sm md:text-base font-serif-antique text-ink-faded italic max-w-md mx-auto">
-            "Dispatch your inquiry directly. The seals are secure and the ink is persistent."
+            "Dispatch your inquiry directly. The seals are secure and the ink is
+            persistent."
           </p>
         </div>
 
         {/* Message dispatch form */}
         <div className="bg-parchment-light border border-gold-ancient/30 p-6 md:p-8 rounded-lg parchment-shadow relative overflow-hidden">
-          
           <AnimatePresence mode="wait">
             {!isDispatched ? (
-              <motion.form 
+              <motion.form
                 key="form"
                 onSubmit={handleSubmit}
                 initial={{ opacity: 1 }}
@@ -54,7 +65,10 @@ export default function ContactSection() {
                 className="space-y-5"
               >
                 <div>
-                  <label htmlFor="contact-name" className="font-mono-antique text-[9px] text-gold-ancient tracking-widest font-bold uppercase block mb-1.5 pl-1">
+                  <label
+                    htmlFor="contact-name"
+                    className="font-mono-antique text-[9px] text-gold-ancient tracking-widest font-bold uppercase block mb-1.5 pl-1"
+                  >
                     Sender Name
                   </label>
                   <input
@@ -69,7 +83,10 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="contact-email" className="font-mono-antique text-[9px] text-gold-ancient tracking-widest font-bold uppercase block mb-1.5 pl-1">
+                  <label
+                    htmlFor="contact-email"
+                    className="font-mono-antique text-[9px] text-gold-ancient tracking-widest font-bold uppercase block mb-1.5 pl-1"
+                  >
                     Return Address (Email)
                   </label>
                   <input
@@ -84,7 +101,10 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className="font-mono-antique text-[9px] text-gold-ancient tracking-widest font-bold uppercase block mb-1.5 pl-1">
+                  <label
+                    htmlFor="contact-message"
+                    className="font-mono-antique text-[9px] text-gold-ancient tracking-widest font-bold uppercase block mb-1.5 pl-1"
+                  >
                     Scripture Message
                   </label>
                   <textarea
@@ -119,7 +139,7 @@ export default function ContactSection() {
                 </button>
               </motion.form>
             ) : (
-              <motion.div 
+              <motion.div
                 key="dispatched"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -127,7 +147,9 @@ export default function ContactSection() {
               >
                 {/* Red wax seal success icon */}
                 <div className="mx-auto w-16 h-16 rounded-full bg-red-800 border-4 border-red-950 flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300 relative">
-                  <span className="font-cursive text-3xl text-gold-ancient font-bold select-none rotate-12">K</span>
+                  <span className="font-cursive text-3xl text-gold-ancient font-bold select-none rotate-12">
+                    K
+                  </span>
                   <div className="absolute inset-0 rounded-full border border-dashed border-red-900/30 ml-[-1px] mt-[-1px] pointer-events-none" />
                 </div>
 
@@ -141,7 +163,8 @@ export default function ContactSection() {
                 </div>
 
                 <p className="font-serif-antique text-sm text-ink-faded leading-relaxed max-w-xs mx-auto">
-                  "Your dispatch has been committed to the ledger. Saurav Karn will read and return a ledger reply soon."
+                  "Your dispatch has been committed to the ledger. Saurav Lal
+                  Karn will read and return a ledger reply soon."
                 </p>
 
                 <button
@@ -154,7 +177,6 @@ export default function ContactSection() {
               </motion.div>
             )}
           </AnimatePresence>
-
         </div>
 
         {/* Traditional social links styled like fine wax-dipped signatures */}
@@ -170,7 +192,9 @@ export default function ContactSection() {
             <div className="w-10 h-10 rounded-full border border-gold-ancient/35 hover:border-gold-ancient bg-parchment-light/80 hover:bg-parchment-light flex items-center justify-center transition-colors">
               <Github className="w-5 h-5 text-ink-faded group-hover:text-gold-ancient transition-colors" />
             </div>
-            <span className="font-mono-antique text-[9px] tracking-wider uppercase opacity-85">Github</span>
+            <span className="font-mono-antique text-[9px] tracking-wider uppercase opacity-85">
+              Github
+            </span>
           </a>
 
           <a
@@ -184,7 +208,9 @@ export default function ContactSection() {
             <div className="w-10 h-10 rounded-full border border-gold-ancient/35 hover:border-gold-ancient bg-parchment-light/80 hover:bg-parchment-light flex items-center justify-center transition-colors">
               <Linkedin className="w-5 h-5 text-ink-faded group-hover:text-gold-ancient transition-colors" />
             </div>
-            <span className="font-mono-antique text-[9px] tracking-wider uppercase opacity-85">Linkedin</span>
+            <span className="font-mono-antique text-[9px] tracking-wider uppercase opacity-85">
+              Linkedin
+            </span>
           </a>
 
           <a
@@ -195,10 +221,11 @@ export default function ContactSection() {
             <div className="w-10 h-10 rounded-full border border-gold-ancient/35 hover:border-gold-ancient bg-parchment-light/80 hover:bg-parchment-light flex items-center justify-center transition-colors">
               <Mail className="w-5 h-5 text-ink-faded group-hover:text-gold-ancient transition-colors" />
             </div>
-            <span className="font-mono-antique text-[9px] tracking-wider uppercase opacity-85">Email</span>
+            <span className="font-mono-antique text-[9px] tracking-wider uppercase opacity-85">
+              Email
+            </span>
           </a>
         </div>
-
       </div>
     </div>
   );

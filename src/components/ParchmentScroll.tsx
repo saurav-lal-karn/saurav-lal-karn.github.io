@@ -300,7 +300,7 @@ export default function ParchmentScroll() {
                 </span>
 
                 <h1 className="font-display-antique text-3xl md:text-5xl text-parchment-light font-medium tracking-wide leading-tight">
-                  The Chronicles of Saurav Karn
+                  The Chronicles of Saurav Lal Karn
                 </h1>
 
                 <p className="font-serif-antique text-sm md:text-base text-parchment-dark/70 italic max-w-md mx-auto">
@@ -330,7 +330,7 @@ export default function ParchmentScroll() {
 
                     <div className="relative z-10 text-center">
                       <span className="font-cursive text-3xl md:text-4xl text-[#3d2716] italic select-none">
-                        Saurav Karn
+                        Saurav Lal Karn
                       </span>
                       <div className="w-32 h-[1px] bg-[#3d2716]/30 mx-auto mt-1" />
                     </div>
@@ -358,11 +358,11 @@ export default function ParchmentScroll() {
                           : { scale: 1 }
                       }
                       transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="w-20 h-20 rounded-full bg-red-800 hover:bg-red-750 border-4 border-red-950 flex items-center justify-center shadow-2xl relative cursor-pointer transform transition-transform group-hover:scale-105 active:scale-95"
+                      className="w-30 h-30 rounded-full bg-red-800 hover:bg-red-750 border-4 border-red-950 flex items-center justify-center shadow-2xl relative cursor-pointer transform transition-transform group-hover:scale-105 active:scale-95"
                     >
                       {/* Wax stamp crest engravings */}
-                      <span className="font-cursive text-4xl text-gold-ancient font-semibold select-none rotate-6 group-hover:rotate-12 transition-transform duration-300">
-                        S
+                      <span className="font-cursive text-3xl text-gold-ancient font-semibold select-none rotate-6 group-hover:rotate-12 transition-transform duration-300">
+                        SLK
                       </span>
 
                       {/* Mini seal inner details */}
@@ -427,10 +427,7 @@ export default function ParchmentScroll() {
             </div>
             <div>
               <span className="font-display-antique text-sm tracking-widest font-bold text-parchment-light uppercase">
-                Saurav Karn
-              </span>
-              <span className="font-mono-antique text-[9px] text-gold-ancient tracking-wide block uppercase leading-none mt-0.5">
-                Scribe Portfolio v2.6.4
+                Saurav Lal Karn
               </span>
             </div>
           </div>
@@ -525,7 +522,7 @@ export default function ParchmentScroll() {
             <div className="w-full h-24 bg-gradient-to-b from-[#bda170] via-[#eedca4] to-[#c7ad74] rounded-t-lg border-x-4 border-double border-gold-ancient/45 rolled-shadow-top flex items-center justify-center p-4">
               <div className="text-center">
                 <span className="font-cursive text-3xl md:text-4xl text-[#3d2716] italic select-none">
-                  Saurav Karn
+                  Saurav Lal Karn
                 </span>
                 <div className="w-32 h-[1px] bg-[#3d2716]/30 mx-auto mt-1" />
               </div>
@@ -534,15 +531,39 @@ export default function ParchmentScroll() {
 
           {/* 2. MAIN SCROLL CONTAINER BODY (PARCHMENT SHEET) */}
           <div className="w-full relative shadow-2xl min-h-[400px]">
-            {/* PROCEDURAL RAGGED PARCHMENT BACKGROUND LAYER (GPU-accelerated, completely isolated) */}
+            {/* PROCEDURAL PARCHMENT BACKGROUND LAYER (STABLE & HIGH-PERFORMANCE BASE) */}
             <div
-              className="parchment-texture border-x-4 border-double border-gold-ancient/45 ragged-border z-0"
+              className="parchment-texture z-0"
               style={{
                 position: "absolute",
                 top: 0,
-                left: 0,
-                right: 0,
                 bottom: 0,
+                left: "4px",
+                right: "4px",
+              }}
+            />
+
+            {/* LEFT PROCEDURAL RAGGED EDGE STRIP */}
+            <div
+              className="parchment-texture border-l-4 border-double border-gold-ancient/45 ragged-border z-0"
+              style={{
+                position: "absolute",
+                top: 0,
+                bottom: 0,
+                left: 0,
+                width: "16px",
+              }}
+            />
+
+            {/* RIGHT PROCEDURAL RAGGED EDGE STRIP */}
+            <div
+              className="parchment-texture border-r-4 border-double border-gold-ancient/45 ragged-border z-0"
+              style={{
+                position: "absolute",
+                top: 0,
+                bottom: 0,
+                right: 0,
+                width: "16px",
               }}
             />
 
@@ -563,20 +584,13 @@ export default function ParchmentScroll() {
                 </div>
 
                 <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-gold-ancient/30 bg-parchment-light/40">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold-ancient animate-ping" />
-                    <span className="font-mono-antique text-[10px] text-ink-faded uppercase tracking-widest font-black">
-                      ACTIVE SCHOLAR ENGINEER
-                    </span>
-                  </div>
-
                   {/* Hand Drawn Title signature effect */}
                   <div className="space-y-1">
                     <p className="font-cursive text-4xl md:text-5xl text-gold-ancient select-none italic text-center text-ink-bleed-text">
-                      Saurav Karn
+                      Saurav Lal Karn
                     </p>
                     <h1 className="font-display-antique text-3xl md:text-5xl lg:text-6xl text-ink-dark font-medium tracking-wide leading-tight">
-                      Software Engineer
+                      Senior Software Engineer
                     </h1>
                   </div>
 
