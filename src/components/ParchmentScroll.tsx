@@ -4,7 +4,7 @@ import JourneyTimeline from "./JourneyTimeline";
 import CurrentQuest from "./CurrentQuest";
 import ProjectsSection from "./ProjectsSection";
 import ToolboxSection from "./ToolboxSection";
-import SystemDesignNotes from "./SystemDesignNotes";
+// import SystemDesignNotes from "./SystemDesignNotes";
 import RoadmapMap from "./RoadmapMap";
 import ContactSection from "./ContactSection";
 import {
@@ -17,145 +17,6 @@ import {
   Sparkles,
   Feather,
 } from "lucide-react";
-
-// Pure Web Audio API high-fidelity dry-parchment and wax seal breaking synthesizer
-const playParchmentSound = (type: "seal" | "unfurl" | "scroll") => {
-  try {
-    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    const now = ctx.currentTime;
-
-    if (ctx.state === "suspended") {
-      ctx.resume();
-    }
-
-    if (type === "seal") {
-      // 1. Soft dry crunch of the breakable wax
-      const bufferSize = ctx.sampleRate * 0.15;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-
-      const filter = ctx.createBiquadFilter();
-      filter.type = "bandpass";
-      filter.frequency.setValueAtTime(320, now);
-      filter.Q.setValueAtTime(10, now);
-
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.3, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-
-      noise.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-      noise.start(now);
-
-      // 2. Heavy mechanical low end thud
-      const osc = ctx.createOscillator();
-      const oscGain = ctx.createGain();
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(150, now);
-      osc.frequency.exponentialRampToValueAtTime(45, now + 0.1);
-
-      oscGain.gain.setValueAtTime(0.5, now);
-      oscGain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-
-      osc.connect(oscGain);
-      oscGain.connect(ctx.destination);
-      osc.start(now);
-      osc.stop(now + 0.12);
-    } else if (type === "unfurl") {
-      const duration = 1.4;
-      const bufferSize = ctx.sampleRate * duration;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-
-      // Dynamic frequency sweep of rustling fiber particles
-      const filter = ctx.createBiquadFilter();
-      filter.type = "bandpass";
-      filter.frequency.setValueAtTime(850, now);
-      filter.frequency.linearRampToValueAtTime(350, now + duration);
-      filter.Q.setValueAtTime(4, now);
-
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.01, now);
-      gain.gain.linearRampToValueAtTime(0.18, now + 0.25);
-
-      // Granulate gain to simulate paper snaps during opening
-      for (let t = 0.1; t < duration; t += 0.15) {
-        const jitter = Math.random() * 0.05;
-        gain.gain.setValueAtTime(0.12 + jitter, now + t);
-        gain.gain.setValueAtTime(0.04 + jitter, now + t + 0.08);
-      }
-
-      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-      noise.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-      noise.start(now);
-
-      // Low friction wood hum
-      const woodOsc = ctx.createOscillator();
-      const woodGain = ctx.createGain();
-      woodOsc.type = "sine";
-      woodOsc.frequency.setValueAtTime(95, now);
-      woodOsc.frequency.linearRampToValueAtTime(70, now + duration);
-
-      woodGain.gain.setValueAtTime(0, now);
-      woodGain.gain.linearRampToValueAtTime(0.16, now + 0.3);
-      woodGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-      woodOsc.connect(woodGain);
-      woodGain.connect(ctx.destination);
-      woodOsc.start(now);
-      woodOsc.stop(now + duration);
-    } else if (type === "scroll") {
-      const duration = 0.22;
-      const bufferSize = ctx.sampleRate * duration;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-
-      const filter = ctx.createBiquadFilter();
-      filter.type = "bandpass";
-      filter.frequency.setValueAtTime(650, now);
-      filter.Q.setValueAtTime(5, now);
-
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.01, now);
-      gain.gain.linearRampToValueAtTime(0.08, now + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-      noise.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-      noise.start(now);
-    }
-  } catch (e) {
-    console.warn(
-      "Audio synthesized player exception (e.g. browser context block):",
-      e,
-    );
-  }
-};
 
 export default function ParchmentScroll() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -181,7 +42,6 @@ export default function ParchmentScroll() {
       // Play light friction unrolling sound as the user scrolls
       const now = Date.now();
       if (now - lastScrollSoundPlayedRef.current > 420) {
-        playParchmentSound("scroll");
         lastScrollSoundPlayedRef.current = now;
       }
     };
@@ -219,12 +79,6 @@ export default function ParchmentScroll() {
   const triggerUnfurl = () => {
     if (isSealingBreaking) return;
     setIsSealingBreaking(true);
-
-    // Play breaking stamp and paper roll out synthesizer sound instantly!
-    playParchmentSound("seal");
-    setTimeout(() => {
-      playParchmentSound("unfurl");
-    }, 100);
 
     // Wax seal crack & roll animation duration
     setTimeout(() => {
@@ -448,12 +302,12 @@ export default function ParchmentScroll() {
             >
               Works
             </button>
-            <button
+            {/* <button
               onClick={() => scrollToSection("system-design-section")}
               className="text-parchment-light/75 hover:text-gold-ancient transition-colors"
             >
               Topologies
-            </button>
+            </button> */}
             <button
               onClick={() => scrollToSection("roadmap-section")}
               className="text-parchment-light/75 hover:text-gold-ancient transition-colors"
@@ -662,10 +516,10 @@ export default function ParchmentScroll() {
                     <ToolboxSection />
                   </div>
 
-                  {/* MANUSCRIPT MARGINS NOTES (SYSTEM DESIGNS) */}
+                  {/* MANUSCRIPT MARGINS NOTES (SYSTEM DESIGNS)
                   <div className="max-w-[1200px] mx-auto px-4 md:px-8">
                     <SystemDesignNotes />
-                  </div>
+                  </div> */}
 
                   {/* PROGRESS MAP (ROADMAP) */}
                   <div className="max-w-[1200px] mx-auto px-4 md:px-8">

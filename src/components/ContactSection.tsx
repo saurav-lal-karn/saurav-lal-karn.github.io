@@ -35,7 +35,7 @@ export default function ContactSection() {
   return (
     <div
       id="contact-section"
-      className="py-16 px-4 md:px-8 manuscript-lines relative"
+      className="pt-6 pb-16 px-4 md:px-8 manuscript-lines relative"
     >
       <div className="max-w-xl mx-auto">
         {/* Title */}
@@ -182,7 +182,7 @@ export default function ContactSection() {
         {/* Traditional social links styled like fine wax-dipped signatures */}
         <div className="mt-12 flex items-center justify-center gap-8">
           <a
-            href="https://github.com/sauravkarn541"
+            href="https://github.com/saurav-lal-karn"
             target="_blank"
             rel="noopener noreferrer"
             referrerPolicy="no-referrer"
@@ -198,7 +198,7 @@ export default function ContactSection() {
           </a>
 
           <a
-            href="https://linkedin.com/in/sauravkarn"
+            href="https://www.linkedin.com/in/saurav-codes/"
             target="_blank"
             rel="noopener noreferrer"
             referrerPolicy="no-referrer"

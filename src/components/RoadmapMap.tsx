@@ -34,15 +34,7 @@ const roadmapNodes: RoadmapNode[] = [
     status: "active",
     description:
       "Mastering high-throughput load distributors, database caching metrics, and async pub/sub setups.",
-    coordinates: { x: 60, y: 25 },
-  },
-  {
-    id: "govt-engineering",
-    title: "Government Career Preparation",
-    status: "future",
-    description:
-      "Reviewing national grid frameworks, state regulatory safety acts, and mechanical/distribution guidelines.",
-    coordinates: { x: 80, y: 65 },
+    coordinates: { x: 80, y: 25 },
   },
   {
     id: "endless-growth",
@@ -63,7 +55,7 @@ export default function RoadmapMap() {
   return (
     <div
       id="roadmap-section"
-      className="py-16 px-4 md:px-8 border-b border-ink-faded/15 manuscript-lines relative"
+      className="pt-16 pb-6 px-4 md:px-8 border-b border-ink-faded/15 manuscript-lines relative"
     >
       <div className="max-w-4xl mx-auto">
         {/* Title */}
@@ -92,7 +84,7 @@ export default function RoadmapMap() {
             Interactive Navigator Chart
           </span>
 
-          <div className="relative min-h-[300px] border border-gold-ancient/15 rounded bg-parchment-light/35 p-4 flex flex-col justify-between">
+          <div className="relative border border-gold-ancient/15 rounded bg-parchment-light/35 p-4 flex flex-col justify-between">
             {/* Background SVG path simulating drawn dashed path */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
@@ -117,7 +109,7 @@ export default function RoadmapMap() {
             </svg>
 
             {/* Path Nodes Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-5 gap-6 relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 relative z-10">
               {roadmapNodes.map((node, index) => {
                 const isActive = selectedNode === node.id;
 
@@ -126,7 +118,7 @@ export default function RoadmapMap() {
                     key={node.id}
                     onClick={() => setSelectedNode(node.id)}
                     id={`roadmap-node-btn-${node.id}`}
-                    className={`p-4 rounded border text-left flex flex-col justify-between transition-all duration-300 relative group min-h-36 ${
+                    className={`p-4 rounded border text-left flex flex-col justify-between transition-all duration-300 relative group min-h-36 cursor-pointer ${
                       isActive
                         ? "bg-parchment-light border-gold-ancient shadow-md scale-102 translate-y-[-2px]"
                         : "bg-parchment-light/35 border-gold-ancient/15 hover:border-gold-ancient/50"
