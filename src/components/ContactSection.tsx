@@ -15,21 +15,61 @@ export default function ContactSection() {
   const [message, setMessage] = useState("");
   const [isDispatched, setIsDispatched] = useState(false);
   const [isSealing, setIsSealing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
 
     setIsSealing(true);
-    // Simulate hot wax sealing animation
-    setTimeout(() => {
+    setError(null);
+
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/sauravkarn541@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            _subject: `📜 New Portfolio Dispatch from ${name}`,
+            _captcha: "false",
+          }),
+        },
+      );
+
+      if (response.ok) {
+        setIsDispatched(true);
+        // Reset inputs
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        const text = await response.text();
+        let errMsg =
+          "Postage carrier guild reported an issue. Please try again.";
+        try {
+          const parsed = JSON.parse(text);
+          if (parsed.message) errMsg = parsed.message;
+        } catch {
+          if (text) errMsg = text;
+        }
+        throw new Error(errMsg);
+      }
+    } catch (err: any) {
+      console.error(err);
+      setError(
+        err.message ||
+          "Connection lost to the carrier guild. Please verify your internet connection.",
+      );
+    } finally {
       setIsSealing(false);
-      setIsDispatched(true);
-      // Reset inputs
-      setName("");
-      setEmail("");
-      setMessage("");
-    }, 2000);
+    }
   };
 
   return (
@@ -123,7 +163,7 @@ export default function ContactSection() {
                   type="submit"
                   id="dispatch-btn"
                   disabled={isSealing}
-                  className="w-full bg-wood-dark hover:bg-black border border-gold-ancient/30 hover:border-gold-ancient text-parchment-light font-display-antique text-sm uppercase tracking-widest font-bold py-3 px-4 rounded-md flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50"
+                  className="w-full bg-wood-dark hover:bg-black border border-gold-ancient/30 hover:border-gold-ancient text-parchment-light font-display-antique text-sm uppercase tracking-widest font-bold py-3 px-4 rounded-md flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50 cursor-pointer"
                 >
                   {isSealing ? (
                     <>
@@ -137,6 +177,12 @@ export default function ContactSection() {
                     </>
                   )}
                 </button>
+
+                {error && (
+                  <div className="p-3 bg-red-950/10 border border-red-900/30 text-red-900 rounded text-xs text-center font-serif-antique leading-relaxed animate-shake">
+                    <span>⚠️ {error}</span>
+                  </div>
+                )}
               </motion.form>
             ) : (
               <motion.div
@@ -163,8 +209,8 @@ export default function ContactSection() {
                 </div>
 
                 <p className="font-serif-antique text-sm text-ink-faded leading-relaxed max-w-xs mx-auto">
-                  "Your dispatch has been committed to the ledger. Saurav Lal
-                  Karn will read and return a ledger reply soon."
+                  "Your dispatch has been committed to the ledger. Saurav Karn
+                  will read and return a ledger reply soon."
                 </p>
 
                 <button
@@ -182,7 +228,7 @@ export default function ContactSection() {
         {/* Traditional social links styled like fine wax-dipped signatures */}
         <div className="mt-12 flex items-center justify-center gap-8">
           <a
-            href="https://github.com/saurav-lal-karn"
+            href="https://github.com/sauravkarn541"
             target="_blank"
             rel="noopener noreferrer"
             referrerPolicy="no-referrer"
@@ -198,7 +244,7 @@ export default function ContactSection() {
           </a>
 
           <a
-            href="https://www.linkedin.com/in/saurav-codes/"
+            href="https://linkedin.com/in/sauravkarn"
             target="_blank"
             rel="noopener noreferrer"
             referrerPolicy="no-referrer"
