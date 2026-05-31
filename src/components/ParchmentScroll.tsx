@@ -30,30 +30,44 @@ export default function ParchmentScroll() {
   const [unfurlComplete, setUnfurlComplete] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Tracks real scroll fraction when unfurled
+  // Tracks real scroll fraction when unfurled - throttled with RAF for performance
   useEffect(() => {
     if (!isUnfurled) return;
 
-    const handleScroll = () => {
-      const el = document.documentElement;
-      const total = el.scrollHeight - el.clientHeight;
-      if (total <= 0) return;
-      const progress = Math.min(1, Math.max(0, el.scrollTop / total));
-      setScrollProgress(progress);
-      setIsTop(el.scrollTop < 60);
-      setIsMobileMenuOpen(false);
+    let rafId: number;
+    let lastScrollTop = 0;
 
-      // Play light friction unrolling sound as the user scrolls
-      const now = Date.now();
-      if (now - lastScrollSoundPlayedRef.current > 420) {
-        lastScrollSoundPlayedRef.current = now;
-      }
+    const handleScroll = () => {
+      // Cancel any pending RAF to avoid stacking
+      if (rafId) cancelAnimationFrame(rafId);
+
+      rafId = requestAnimationFrame(() => {
+        const el = document.documentElement;
+        const currentScrollTop = el.scrollTop;
+
+        // Only update if scroll position changed significantly (reduces re-renders)
+        if (Math.abs(currentScrollTop - lastScrollTop) < 5) return;
+        lastScrollTop = currentScrollTop;
+
+        const total = el.scrollHeight - el.clientHeight;
+        if (total <= 0) return;
+
+        const progress = Math.min(1, Math.max(0, currentScrollTop / total));
+        setScrollProgress(progress);
+        setIsTop(currentScrollTop < 60);
+
+        // Close mobile menu on scroll
+        if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isUnfurled]);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [isUnfurled, isMobileMenuOpen]);
 
   // Handle scroll or touch gestures when scroll is closed to trigger unfurl
   useEffect(() => {
@@ -96,7 +110,13 @@ export default function ParchmentScroll() {
   const scrollToSection = (id: string) => {
     const target = document.getElementById(id);
     if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
+      // Use smooth scroll with fallback for better mobile support
+      const targetPosition =
+        target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -144,7 +164,6 @@ export default function ParchmentScroll() {
             className="fixed inset-0 bg-[#0d0a08]/95 flex flex-col items-center justify-center z-50 px-4 overflow-hidden"
           >
             {/* Ambient Background Glow */}
-            <div className="absolute inset-x-0 top-1/4 h-96 bg-gold-ancient/5 filter blur-[100px] pointer-events-none" />
 
             <div className="max-w-[1000px] w-[92%] text-center space-y-8 relative z-10 mx-auto">
               {/* Introduction Title before opening */}
@@ -270,7 +289,7 @@ export default function ParchmentScroll() {
 
       {/* FIXED FLOATING MANUSCRIPT HEADER/BANNER */}
       {isUnfurled && (
-        <header className="fixed top-0 inset-x-0 h-16 bg-wood-dark/95 border-b border-gold-ancient/20 z-40 shadow-xl backdrop-blur-sm">
+        <header className="fixed top-0 inset-x-0 h-16 bg-wood-dark border-b border-gold-ancient/20 z-40 shadow-xl">
           <div className="h-full flex items-center justify-between px-6 md:justify-start">
             {/* Left - Logo */}
             <div className="flex items-center gap-2">
@@ -345,7 +364,7 @@ export default function ParchmentScroll() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-16 inset-x-0 bg-wood-dark/98 border-b border-gold-ancient/20 z-30 md:hidden backdrop-blur-sm"
+            className="fixed top-16 inset-x-0 bg-wood-dark border-b border-gold-ancient/20 z-30 md:hidden"
           >
             <nav className="flex flex-col py-4 px-6 space-y-1">
               {[
@@ -397,19 +416,13 @@ export default function ParchmentScroll() {
           <div className="w-full relative z-20 mb-[-1px]">
             {/* Wooden rod details extending slightly outside */}
             <div className="absolute left-[-2.5%] right-[-2.5%] top-1/2 -translate-y-1/2 h-8 bg-gradient-to-r from-[#211208] via-[#542d13] to-[#211208] shadow-2xl flex justify-between px-4 items-center border border-gold-ancient/30">
-              {/* Ornate Gold rod knobs rotating live with scrollProgress */}
-              <motion.div
-                style={{ rotate: scrollProgress * 1500 }}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-ancient via-[#7a5c20] to-gold-ancient border-2 border-[#122c15] shadow-inner flex items-center justify-center -ml-2"
-              >
+              {/* Ornate Gold rod knobs - static for performance */}
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-ancient via-[#7a5c20] to-gold-ancient border-2 border-[#122c15] shadow-inner flex items-center justify-center -ml-2">
                 <div className="w-4 h-4 rounded-full bg-[#1b0d06] border border-gold-ancient/40" />
-              </motion.div>
-              <motion.div
-                style={{ rotate: -scrollProgress * 1500 }}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-ancient via-[#7a5c20] to-gold-ancient border-2 border-[#122c15] shadow-inner flex items-center justify-center -mr-2"
-              >
+              </div>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-ancient via-[#7a5c20] to-gold-ancient border-2 border-[#122c15] shadow-inner flex items-center justify-center -mr-2">
                 <div className="w-4 h-4 rounded-full bg-[#1b0d06] border border-gold-ancient/40" />
-              </motion.div>
+              </div>
             </div>
 
             {/* Roll cylinder itself representing top unrolled */}
@@ -589,19 +602,13 @@ export default function ParchmentScroll() {
           <div className="w-full relative z-20 mt-[-1px]">
             {/* Wooden rod details extending slightly outside */}
             <div className="absolute left-[-2.5%] right-[-2.5%] top-1/2 -translate-y-1/2 h-8 bg-gradient-to-r from-[#211208] via-[#542d13] to-[#211208] shadow-2xl flex justify-between px-4 items-center border border-gold-ancient/30">
-              {/* Ornate Gold rod knobs rotating live with scrollProgress */}
-              <motion.div
-                style={{ rotate: scrollProgress * 1500 }}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-ancient via-[#7a5c20] to-gold-ancient border-2 border-[#122c15] shadow-inner flex items-center justify-center -ml-2"
-              >
+              {/* Ornate Gold rod knobs - static for performance */}
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-ancient via-[#7a5c20] to-gold-ancient border-2 border-[#122c15] shadow-inner flex items-center justify-center -ml-2">
                 <div className="w-4 h-4 rounded-full bg-[#1b0d06] border border-gold-ancient/40" />
-              </motion.div>
-              <motion.div
-                style={{ rotate: -scrollProgress * 1500 }}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-ancient via-[#7a5c20] to-gold-ancient border-2 border-[#122c15] shadow-inner flex items-center justify-center -mr-2"
-              >
+              </div>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-ancient via-[#7a5c20] to-gold-ancient border-2 border-[#122c15] shadow-inner flex items-center justify-center -mr-2">
                 <div className="w-4 h-4 rounded-full bg-[#1b0d06] border border-gold-ancient/40" />
-              </motion.div>
+              </div>
             </div>
 
             {/* Roll cylinder itself representing bottom rolling inward */}

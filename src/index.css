@@ -1,6 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Pinyon+Script&display=swap");
 @import "tailwindcss";
 
+/* Smooth scrolling for all browsers */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimize rendering performance */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 @theme {
   --font-serif-antique: "EB Garamond", Georgia, serif;
   --font-display-antique: "Cinzel", Times, serif;
@@ -37,7 +48,7 @@
   background: #b89c66;
 }
 
-/* Customized Paper textures & ink bled highlights */
+/* Customized Paper textures - optimized for performance */
 .parchment-texture {
   background-color: #f7eed8; /* Antique warm parchment base */
   background-image:
@@ -47,37 +58,16 @@
       transparent 40%,
       rgba(105, 82, 52, 0.12) 100%
     ),
-    /* Soft organic vintage water stains/blotches */
-    radial-gradient(
-      circle at 15% 25%,
-      rgba(153, 122, 83, 0.1) 0%,
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 80% 65%,
-      rgba(139, 107, 68, 0.12) 0%,
-      transparent 40%
-    ),
     /* Ambient fiber lighting reflect */
     radial-gradient(
       circle at 45% 15%,
-      rgba(255, 255, 255, 0.5) 0%,
-      transparent 55%
+      rgba(255, 255, 255, 0.4) 0%,
+      transparent 50%
     );
   position: relative;
   box-shadow:
-    inset 0 0 50px rgba(60, 43, 23, 0.15), /* Inner shadow for unrolled organic paper depth */
-    0 15px 45px -5px rgba(0, 0, 0, 0.5);
-}
-
-.parchment-texture::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.09; /* Slightly boosted for richer tangible texture */
-  pointer-events: none;
-  /* High fidelity inline SVG combining fractal noise and vintage color matrix filtering */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35   0 0 0 0 0.28   0 0 0 0 0.18  0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
+    inset 0 0 40px rgba(60, 43, 23, 0.12),
+    0 10px 30px -5px rgba(0, 0, 0, 0.4);
 }
 
 /* Ink Bleed hover/focus rings for interactive elements */
@@ -111,15 +101,13 @@
     inset 0 15px 30px rgba(0, 0, 0, 0.8);
 }
 
-/* Ink bleed animation */
+/* Ink bleed animation - simplified for performance */
 @keyframes inkBleed {
   from {
-    filter: blur(2px);
     opacity: 0;
     letter-spacing: -2px;
   }
   to {
-    filter: blur(0);
     opacity: 1;
     letter-spacing: normal;
   }
@@ -127,6 +115,17 @@
 
 .ink-bleed-text {
   animation: inkBleed 1.2s ease-out forwards;
+}
+
+/* Respect user's reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Margin lines simulating lined ancient journal notes */
