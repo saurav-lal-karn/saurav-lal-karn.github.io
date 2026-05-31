@@ -36,6 +36,7 @@ export default function ParchmentScroll() {
 
     let rafId: number;
     let lastScrollTop = 0;
+    let menuOpenScrollTop = 0;
 
     const handleScroll = () => {
       // Cancel any pending RAF to avoid stacking
@@ -55,9 +56,6 @@ export default function ParchmentScroll() {
         const progress = Math.min(1, Math.max(0, currentScrollTop / total));
         setScrollProgress(progress);
         setIsTop(currentScrollTop < 60);
-
-        // Close mobile menu on scroll
-        if (isMobileMenuOpen) setIsMobileMenuOpen(false);
       });
     };
 
@@ -67,7 +65,7 @@ export default function ParchmentScroll() {
       window.removeEventListener("scroll", handleScroll);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [isUnfurled, isMobileMenuOpen]);
+  }, [isUnfurled]);
 
   // Handle scroll or touch gestures when scroll is closed to trigger unfurl
   useEffect(() => {
