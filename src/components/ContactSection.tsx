@@ -25,24 +25,28 @@ export default function ContactSection() {
     setError(null);
 
     try {
-      const formData = new URLSearchParams();
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("message", message);
-      formData.append("_subject", `📜 New Portfolio Dispatch from ${name}`);
-      formData.append("_captcha", "false");
+      const formData = {
+        access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+        name,
+        email,
+        message,
+        subject: `📜 New Portfolio Dispatch from ${name}`,
+      };
 
-      // Use mode: 'no-cors' with application/x-www-form-urlencoded.
-      // This qualifies as a "simple CORS request" which does not trigger a preflight OPTIONS request,
-      // completely bypassing CORS origin blocking on GitHub Pages.
-      await fetch("https://formsubmit.co/sauravkarn541@gmail.com", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        mode: "no-cors",
-        body: formData.toString(),
+        body: JSON.stringify(formData),
       });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message || "Failed to send message");
+      }
 
       setIsDispatched(true);
       // Reset inputs
