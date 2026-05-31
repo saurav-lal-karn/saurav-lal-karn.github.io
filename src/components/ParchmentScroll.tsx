@@ -270,23 +270,39 @@ export default function ParchmentScroll() {
 
       {/* FIXED FLOATING MANUSCRIPT HEADER/BANNER */}
       {isUnfurled && (
-        <header className="fixed top-0 inset-x-0 h-16 bg-wood-dark/95 border-b border-gold-ancient/20 flex items-center justify-between px-6 z-40 shadow-xl backdrop-blur-sm">
-          <div className="flex items-center gap-2">
-            {/* Miniature Golden Royal Seal - Name Logo */}
-            <div className="w-8 h-8 rounded-full bg-[#1a1512] border border-gold-ancient/60 flex items-center justify-center shadow-inner">
-              <span className="font-serif text-lg font-bold italic text-gold-ancient">
-                S
-              </span>
+        <header className="fixed top-0 inset-x-0 h-16 bg-wood-dark/95 border-b border-gold-ancient/20 z-40 shadow-xl backdrop-blur-sm">
+          <div className="h-full flex items-center justify-between px-6 md:justify-start">
+            {/* Left - Logo */}
+            <div className="flex items-center gap-2">
+              {/* Miniature Golden Royal Seal - Name Logo */}
+              <div className="w-8 h-8 rounded-full bg-[#1a1512] border border-gold-ancient/60 flex items-center justify-center shadow-inner">
+                <span className="font-serif text-lg font-bold italic text-gold-ancient">
+                  S
+                </span>
+              </div>
+              <div>
+                <span className="font-display-antique text-sm tracking-widest font-bold text-parchment-light uppercase">
+                  Saurav Lal Karn
+                </span>
+              </div>
             </div>
-            <div>
-              <span className="font-display-antique text-sm tracking-widest font-bold text-parchment-light uppercase">
-                Saurav Lal Karn
-              </span>
-            </div>
+
+            {/* Hamburger Menu Button - Mobile (moved here for flex order) */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-parchment-light/75 hover:text-gold-ancient transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
           </div>
 
-          {/* Dynamic Navigation anchor deck - Desktop */}
-          <nav className="hidden md:flex items-center gap-6 text-xs font-mono-antique uppercase tracking-widest">
+          {/* Dynamic Navigation anchor deck - Desktop (Centered) */}
+          <nav className="hidden md:flex items-center justify-center gap-6 text-xs font-mono-antique uppercase tracking-widest absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <button
               onClick={() => scrollToSection("journey-section")}
               className="text-parchment-light/75 hover:text-gold-ancient transition-colors"
@@ -318,19 +334,6 @@ export default function ParchmentScroll() {
               Contact
             </button>
           </nav>
-
-          {/* Hamburger Menu Button - Mobile */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-parchment-light/75 hover:text-gold-ancient transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
         </header>
       )}
 
