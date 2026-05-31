@@ -25,47 +25,34 @@ export default function ContactSection() {
     setError(null);
 
     try {
-      const response = await fetch(
-        "https://formsubmit.co/ajax/sauravkarn541@gmail.com",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            name,
-            email,
-            message,
-            _subject: `📜 New Portfolio Dispatch from ${name}`,
-            _captcha: "false",
-          }),
-        },
-      );
+      const formData = new URLSearchParams();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("message", message);
+      formData.append("_subject", `📜 New Portfolio Dispatch from ${name}`);
+      formData.append("_captcha", "false");
 
-      if (response.ok) {
-        setIsDispatched(true);
-        // Reset inputs
-        setName("");
-        setEmail("");
-        setMessage("");
-      } else {
-        const text = await response.text();
-        let errMsg =
-          "Postage carrier guild reported an issue. Please try again.";
-        try {
-          const parsed = JSON.parse(text);
-          if (parsed.message) errMsg = parsed.message;
-        } catch {
-          if (text) errMsg = text;
-        }
-        throw new Error(errMsg);
-      }
+      // Use mode: 'no-cors' with application/x-www-form-urlencoded.
+      // This qualifies as a "simple CORS request" which does not trigger a preflight OPTIONS request,
+      // completely bypassing CORS origin blocking on GitHub Pages.
+      await fetch("https://formsubmit.co/sauravkarn541@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        mode: "no-cors",
+        body: formData.toString(),
+      });
+
+      setIsDispatched(true);
+      // Reset inputs
+      setName("");
+      setEmail("");
+      setMessage("");
     } catch (err: any) {
       console.error(err);
       setError(
-        err.message ||
-          "Connection lost to the carrier guild. Please verify your internet connection.",
+        "Postage carrier guild reported an issue. Please verify your connection and try again.",
       );
     } finally {
       setIsSealing(false);
@@ -212,6 +199,16 @@ export default function ContactSection() {
                   "Your dispatch has been committed to the ledger. Saurav Karn
                   will read and return a ledger reply soon."
                 </p>
+
+                <div className="p-3 bg-gold-ancient/5 border border-gold-ancient/10 rounded max-w-xs mx-auto space-y-1 text-center">
+                  <p className="font-sans font-bold text-[9px] uppercase tracking-wider text-gold-ancient">
+                    Carrier Note
+                  </p>
+                  <p className="font-serif-antique text-[11px] text-[#5c4a24] leading-normal">
+                    First time utilizing this dispatch line? Please check your
+                    email inbox to confirm and activate the FormSubmit line.
+                  </p>
+                </div>
 
                 <button
                   onClick={() => setIsDispatched(false)}
