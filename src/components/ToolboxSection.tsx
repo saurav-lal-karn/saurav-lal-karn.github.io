@@ -22,7 +22,7 @@ const toolboxData: {
   {
     category: "Backend Architectures",
     icon: Server,
-    skills: ["Go", "Python", "Node.js"],
+    skills: ["Go", "Python", "Node.js", "Laravel"],
   },
   {
     category: "Frontend Presentation",
@@ -32,7 +32,7 @@ const toolboxData: {
   {
     category: "Relational & Structured Storage",
     icon: Database,
-    skills: ["PostgreSQL", "Neo4j"],
+    skills: ["PostgreSQL", "MySQL", "MongoDB"],
   },
   {
     category: "Cognitive & AI intelligence",

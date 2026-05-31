@@ -12,64 +12,83 @@ import {
 const projectsData: Project[] = [
   {
     id: "expense-tracker",
-    title: "Expense Tracker Platform",
+    title: "Moniq: Expense Tracker Platform",
     problem:
       "Managing diverse financial streams, physical invoices, and subscriptions remains manual and unorganized for individuals seeking granular fiscal insights.",
     solution:
       "Designed a high-throughput transaction scanner using a Fiber-based Go router, optimized Postgres queries, and automated invoice parsing via structural models.",
-    technologies: [
-      "React",
-      "Go",
-      "PostgreSQL",
-      "Python",
-      "Docker",
-      "Gemini API",
-    ],
+    technologies: ["NextJS", "Go", "PostgreSQL", "Python", "Docker", "LLM"],
     lessons:
       "Optimizing high-concurrency Go database pooling yields drastic latency cuts; structuring LLM JSON payloads prevents token formatting failures.",
     pinned: true,
   },
   {
-    id: "ai-document-gen",
-    title: "AI Document Generator",
-    problem:
-      "Contract drafting and compliance auditing require manual checks, consuming hours of legal or administrative engineering cycles.",
+    id: "document-processing-llm",
+    title: "LLM-Driven Document Processing",
+    problem: "Document Processing remains a challenge for LLMs.",
     solution:
-      "Constructed an automated templating system extracting key clauses from unstructured notes using a multi-agent workflow and automated retrieval (RAG).",
-    technologies: ["Next.js", "Node.js", "Pinecone", "LangChain", "Gemini API"],
-    lessons:
-      "Chunking strategies are highly contextual; fine-tuning text overlap ratios improves semantic retrieval reliability over generic standard parameters.",
-    pinned: true,
-  },
-  {
-    id: "scroll-portfolio",
-    title: "Ancient Scroll Portfolio",
-    problem:
-      "Modern recruiter portfolios look cookie-cutter and robotic, failing to represent the unique creative identity and rigor of structural engineers.",
-    solution:
-      "Built this responsive parchment manuscript that combines classic explorer journal styles with robust type-safe component design and SVG fluid diagrams.",
+      "Developed a robust document generation pipeline using LLM, Implemented an LLM-powered assistant for document processing, including parsing and presenting documents for user-friendly viewing.",
     technologies: [
-      "React",
-      "Vite",
-      "Tailwind v4",
-      "Framer Motion",
-      "TypeScript",
+      "Go",
+      "NextJS",
+      "Python",
+      "OpenAI",
+      "Anthropic",
+      "Langchain",
+      "PostgreSQL",
+      "LLM",
     ],
     lessons:
-      "Complex viewport animations must be designed efficiently; relying on pure CSS rendering variables avoids heavy layout thrashing during scrolls.",
+      "OpenAI's GPT-4 has proven to be a powerful tool for document generation.",
     pinned: true,
   },
   {
-    id: "future-ai-apps",
-    title: "Future Autonomous Agents",
+    id: "blockchain-based-voting-system",
+    title: "Blockchain Based Voting System",
     problem:
-      "Standard AI assistants lack deep contextual execution loops, performing isolated short-term chats rather than long-horizon task coordination.",
+      "Voting system remains a untransparent and easily riggable process",
     solution:
-      "Mapping a modular runtime with persistent state caches and reactive callbacks to create safe, reliable, and self-correcting agent chains.",
-    technologies: ["Python", "Neo4j", "FastAPI", "Google GenAI SDK"],
+      "Implemented the voting system using blockchain to add transaparency to entire process and eliminate any chance of rigging.",
+    technologies: ["NextJS", "NestJS", "Web3", "Metamask", "Solidity"],
     lessons:
-      "Graph-based conversation indexing provides high relational transparency, allowing agent paths to remain visible, auditable, and secure.",
-    pinned: false,
+      "Blockchains are expensive but do provide the power of transparency and unmutable ledger",
+    pinned: true,
+  },
+  {
+    id: "dwell",
+    title: "Dwell: Tenancy Managment System",
+    problem:
+      "Finding the right tenant for your property or right property for users can be a daunting task.",
+    solution:
+      "Implemented the apis for showing the available properties and tenants based on location and user preferences and apis for managing the tenancy.",
+    technologies: ["NodeJS", "MySQL", "API", "Stripe"],
+    lessons:
+      "The matches should be based on location, user preferences and availability of properties and tenants",
+    pinned: true,
+  },
+  {
+    id: "farm-service-manager",
+    title: "Farm Service Manager",
+    problem:
+      "Management of machinery and equipment on remote farms remains manual and unorganized for individuals seeking granular fiscal insights.",
+    solution:
+      "Implemented the apis for tracking the machinery and equipment on remote farms. The user can stay offline for long time and when online the app syncs the data",
+    technologies: ["Laravel", "MySQL", "API", "Braintree"],
+    lessons:
+      "We need to store the data in users device when offline and when online sync it to server using timestamps",
+    pinned: true,
+  },
+  {
+    id: "foodmario",
+    title: "Foodmario: Food Ordering Platform",
+    problem:
+      "Food ordering platform favors large restaurants while local households are left out.",
+    solution:
+      "A platform where local households are first vendors. The goal is to provide healthy food.",
+    technologies: ["Laravel", "MySQL", "API"],
+    lessons:
+      "The listing should be based on the location, availability and prices of food items as well as preferences of the users",
+    pinned: true,
   },
 ];
 
@@ -191,8 +210,11 @@ export default function ProjectsSection() {
                     style={{
                       gridTemplateRows: isExpanded ? "1fr" : "0fr",
                       opacity: isExpanded ? 1 : 0,
-                      transition: "grid-template-rows 0.3s ease-out, opacity 0.3s ease-out",
-                      willChange: isExpanded ? "auto" : "grid-template-rows, opacity",
+                      transition:
+                        "grid-template-rows 0.3s ease-out, opacity 0.3s ease-out",
+                      willChange: isExpanded
+                        ? "auto"
+                        : "grid-template-rows, opacity",
                     }}
                   >
                     <div className="overflow-hidden">
