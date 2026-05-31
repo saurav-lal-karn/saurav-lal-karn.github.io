@@ -16,6 +16,8 @@ import {
   Lock,
   Sparkles,
   Feather,
+  Menu,
+  X,
 } from "lucide-react";
 
 export default function ParchmentScroll() {
@@ -26,6 +28,7 @@ export default function ParchmentScroll() {
   const [isUnfurled, setIsUnfurled] = useState(false);
   const [isSealingBreaking, setIsSealingBreaking] = useState(false);
   const [unfurlComplete, setUnfurlComplete] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Tracks real scroll fraction when unfurled
   useEffect(() => {
@@ -38,6 +41,7 @@ export default function ParchmentScroll() {
       const progress = Math.min(1, Math.max(0, el.scrollTop / total));
       setScrollProgress(progress);
       setIsTop(el.scrollTop < 60);
+      setIsMobileMenuOpen(false);
 
       // Play light friction unrolling sound as the user scrolls
       const now = Date.now();
@@ -268,12 +272,11 @@ export default function ParchmentScroll() {
       {isUnfurled && (
         <header className="fixed top-0 inset-x-0 h-16 bg-wood-dark/95 border-b border-gold-ancient/20 flex items-center justify-between px-6 z-40 shadow-xl backdrop-blur-sm">
           <div className="flex items-center gap-2">
-            {/* Miniature Golden Royal Seal */}
-            <div className="w-8 h-8 rounded-full bg-gold-ancient/15 border border-gold-ancient/60 flex items-center justify-center p-1.5 shadow-inner">
-              <Compass
-                className="w-full h-full text-gold-ancient animate-spin-slow"
-                strokeWidth="1.5"
-              />
+            {/* Miniature Golden Royal Seal - Name Logo */}
+            <div className="w-8 h-8 rounded-full bg-[#1a1512] border border-gold-ancient/60 flex items-center justify-center shadow-inner">
+              <span className="font-serif text-lg font-bold italic text-gold-ancient">
+                S
+              </span>
             </div>
             <div>
               <span className="font-display-antique text-sm tracking-widest font-bold text-parchment-light uppercase">
@@ -282,7 +285,7 @@ export default function ParchmentScroll() {
             </div>
           </div>
 
-          {/* Dynamic Navigation anchor deck */}
+          {/* Dynamic Navigation anchor deck - Desktop */}
           <nav className="hidden md:flex items-center gap-6 text-xs font-mono-antique uppercase tracking-widest">
             <button
               onClick={() => scrollToSection("journey-section")}
@@ -302,12 +305,6 @@ export default function ParchmentScroll() {
             >
               Works
             </button>
-            {/* <button
-              onClick={() => scrollToSection("system-design-section")}
-              className="text-parchment-light/75 hover:text-gold-ancient transition-colors"
-            >
-              Topologies
-            </button> */}
             <button
               onClick={() => scrollToSection("roadmap-section")}
               className="text-parchment-light/75 hover:text-gold-ancient transition-colors"
@@ -322,10 +319,54 @@ export default function ParchmentScroll() {
             </button>
           </nav>
 
-          {/* Unfurl state ticker */}
-          <div className="flex items-center gap-2"></div>
+          {/* Hamburger Menu Button - Mobile */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-parchment-light/75 hover:text-gold-ancient transition-colors"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
         </header>
       )}
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isUnfurled && isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-16 inset-x-0 bg-wood-dark/98 border-b border-gold-ancient/20 z-30 md:hidden backdrop-blur-sm"
+          >
+            <nav className="flex flex-col py-4 px-6 space-y-1">
+              {[
+                { id: "journey-section", label: "Journey" },
+                { id: "quest-section", label: "Current Quest" },
+                { id: "projects-section", label: "Works" },
+                { id: "roadmap-section", label: "Chart" },
+                { id: "contact-section", label: "Contact" },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    scrollToSection(item.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-left text-parchment-light/75 hover:text-gold-ancient hover:bg-gold-ancient/5 transition-colors font-mono-antique text-xs uppercase tracking-widest py-3 px-4 rounded-md"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* BACK TO TOP ANCHOR STRING */}
       {isUnfurled && !isTop && (
@@ -347,7 +388,7 @@ export default function ParchmentScroll() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           onAnimationComplete={() => setUnfurlComplete(true)}
           style={{ willChange: "transform, opacity" }}
-          className="max-w-[1000px] w-[92%] mx-auto pt-24 pb-28 relative z-10 flex flex-col items-center select-text"
+          className="max-w-[1000px] w-[92%] mx-auto pt-24 pb-18 relative z-10 flex flex-col items-center select-text"
         >
           {/* 1. SCROLL TOP ROLL: A thick luxurious wood & paper roll element */}
           <div className="w-full relative z-20 mb-[-1px]">

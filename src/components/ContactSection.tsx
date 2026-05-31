@@ -200,8 +200,8 @@ export default function ContactSection() {
                 </div>
 
                 <p className="font-serif-antique text-sm text-ink-faded leading-relaxed max-w-xs mx-auto">
-                  "Your dispatch has been committed to the ledger. Saurav Karn
-                  will read and return a ledger reply soon."
+                  "Your dispatch has been committed to the ledger. Saurav Lal
+                  Karn will read and return a ledger reply soon."
                 </p>
 
                 <div className="p-3 bg-gold-ancient/5 border border-gold-ancient/10 rounded max-w-xs mx-auto space-y-1 text-center">
@@ -229,7 +229,7 @@ export default function ContactSection() {
         {/* Traditional social links styled like fine wax-dipped signatures */}
         <div className="mt-12 flex items-center justify-center gap-8">
           <a
-            href="https://github.com/sauravkarn541"
+            href="https://github.com/saurav-lal-karn"
             target="_blank"
             rel="noopener noreferrer"
             referrerPolicy="no-referrer"
@@ -245,7 +245,7 @@ export default function ContactSection() {
           </a>
 
           <a
-            href="https://linkedin.com/in/sauravkarn"
+            href="https://www.linkedin.com/in/saurav-codes/"
             target="_blank"
             rel="noopener noreferrer"
             referrerPolicy="no-referrer"
